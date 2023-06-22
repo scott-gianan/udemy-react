@@ -1,11 +1,14 @@
 function Pizza({ name, photoName, price, ingredients, isSoldOut }) {
+  //if (isSoldOut) return null;
   return (
-    <div className={`pizza ${isSoldOut ? "sold-out" : ""}`}>
+    <li className={`pizza ${isSoldOut ? "sold-out" : null}`}>
       <img src={photoName} alt={name} />
-      <h3>{name}</h3>
-      <p>{ingredients}</p>
-      <span>{price + 3}</span>
-    </div>
+      <div>
+        <h3>{name}</h3>
+        <p>{ingredients}</p>
+        <span>{isSoldOut ? "SOLD OUT" : price}</span>
+      </div>
+    </li>
   );
 }
 export default Pizza;

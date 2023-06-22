@@ -3,10 +3,25 @@ export default function Footer() {
   const openHour = 12;
   const closedHour = 22;
   const isOpen = hour >= openHour && hour <= closedHour;
-  //   if (hour >= openHour && hour <= closedHour) {
-  //     window.alert("we're currently open");
-  //   } else {
-  //     window.alert("sorry, we're closed");
-  //   }
-  return <footer>{new Date().toLocaleDateString()}We're currently open</footer>;
+
+  return (
+    <footer className="footer">
+      {isOpen ? (
+        <Order closedHour={closedHour} />
+      ) : (
+        <p className="order">
+          We're Happy to welcome you between {openHour}:00 and {closedHour}:00
+        </p>
+      )}
+    </footer>
+  );
+}
+
+function Order({ closedHour }) {
+  return (
+    <div className="order">
+      <p>We're open until {closedHour}:00. Come visit us or order online.</p>
+      <button className="btn">Order</button>
+    </div>
+  );
 }
