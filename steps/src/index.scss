@@ -9,13 +9,15 @@ $main-color: #646cff;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #ffffff;
+  // background-color: #242424;
   --main-color: #646cff;
 }
 
 /* from starter file */
 
 .steps {
+  position: relative;
   width: 600px;
   background-color: #f7f7f7;
   border-radius: 7px;
@@ -93,15 +95,21 @@ h3 {
 
 .close {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  border: none;
-  background: none;
+  top: 24px;
+  right: 400px;
+  border: 2px solid black;
+  background: transparent !important;
   cursor: pointer;
-  font-size: 40px;
-  color: inherit;
+  font-size: 20px !important;
+  color: black !important;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .close:hover {
-  color: #7950f2;
+  color: #7950f2 !important;
 }
