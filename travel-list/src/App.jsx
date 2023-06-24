@@ -5,8 +5,6 @@ import Logo from "./Components/Logo/Logo";
 import Form from "./Components/Form/Form";
 import PackingList from "./Components/PackingList/PackingList";
 import Stats from "./Components/Stats/Stats";
-import ItemsData from "../src/assets/ItemsData";
-
 function App() {
   const [items, setItems] = useState([
     {
