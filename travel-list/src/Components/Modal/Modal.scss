@@ -1,0 +1,48 @@
+
+.backdrop {
+    z-index: 2;
+    height: 100vh;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.767);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s;
+    .modal{
+        width: 35vw;
+        height: 35vh;
+        border-radius: 2rem;
+        background-color: #0edf9d;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border:  5px solid #d3beaf;
+        h3{
+            text-align: center;
+        }
+        .button-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top:2rem;
+            gap:2rem;
+            button {
+                &:hover {
+                    background-color: whitesmoke;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity:0;
+	}
+
+	100% {
+		opacity:1;
+	}
+}
