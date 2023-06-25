@@ -1,6 +1,8 @@
 import Item from "./Item/Item";
-
+import Modal from "../Modal/Modal";
+import { useState } from "react";
 export default function PackingList({ items, setItems }) {
+  const [showModal, setShowModal] = useState(false);
   const toggleIsPacked = (i) => {
     setItems((prevItems) => {
       return prevItems.map((item) => {
@@ -15,20 +17,33 @@ export default function PackingList({ items, setItems }) {
       });
     });
   };
+  const handleShowModal = () => {
+    setShowModal(!showModal);
+  };
+  const handleClearList = () => {
+    setItems([]);
+    setShowModal(!showModal);
+  };
   return (
-    <div className="list">
-      <ul>
-        {items.map((item) => {
-          return (
-            <Item
-              key={item.id}
-              item={item}
-              toggleIsPacked={toggleIsPacked}
-              removeItem={removeItem}
-            />
-          );
-        })}
-      </ul>
-    </div>
+    <>
+      {showModal && (
+        <Modal clearList={handleClearList} closeModal={handleShowModal} />
+      )}
+      <div className="list">
+        <ul>
+          {items.map((item) => {
+            return (
+              <Item
+                key={item.id}
+                item={item}
+                toggleIsPacked={toggleIsPacked}
+                removeItem={removeItem}
+              />
+            );
+          })}
+        </ul>
+        <button onClick={handleShowModal}>Clear List</button>
+      </div>
+    </>
   );
 }
