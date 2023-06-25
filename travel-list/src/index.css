@@ -128,6 +128,7 @@ input[type="checkbox"] {
   font-size: 1.8rem;
   padding: 0.8rem;
   transform: translateY(2px);
+  color: red;
 }
 
 .stats {
