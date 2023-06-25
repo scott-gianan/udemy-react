@@ -9,7 +9,6 @@ export default function Form({ items, setItems }) {
     isPacked: false,
   });
   const id = useId();
-  console.log(items);
   const handleChangeQuantity = (event) => {
     console.log(event);
     if (event.target.value === 0) return;
