@@ -6,27 +6,14 @@ import Form from "./Components/Form/Form";
 import PackingList from "./Components/PackingList/PackingList";
 import Stats from "./Components/Stats/Stats";
 function App() {
-  const [items, setItems] = useState([
-    {
-      id: crypto.randomUUID(),
-      description: "Passports",
-      quantity: 2,
-      isPacked: false,
-    },
-    {
-      id: crypto.randomUUID(),
-      description: "Socks",
-      quantity: 12,
-      isPacked: false,
-    },
-  ]);
+  const [items, setItems] = useState([]);
 
   return (
     <div className="app">
       <Logo />
       <Form items={items} setItems={setItems} />
       <PackingList items={items} setItems={setItems} />
-      <Stats />
+      <Stats items={items} />
     </div>
   );
 }
