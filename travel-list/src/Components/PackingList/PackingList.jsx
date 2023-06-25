@@ -15,7 +15,6 @@ export default function PackingList({ items, setItems }) {
       });
     });
   };
-  console.log(items);
   return (
     <div className="list">
       <ul>

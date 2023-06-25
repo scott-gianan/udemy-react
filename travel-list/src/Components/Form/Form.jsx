@@ -10,7 +10,6 @@ export default function Form({ items, setItems }) {
   });
   const id = useId();
   const handleChangeQuantity = (event) => {
-    console.log(event);
     if (event.target.value === 0) return;
     setFormData({
       ...formData,
