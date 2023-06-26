@@ -1,5 +1,5 @@
-export default function Item({ item, toggleIsPacked, removeItem }) {
-  const { description, quantity, isPacked } = item;
+export default function Item({ item, removeItems, onToggleItems }) {
+  const { description, quantity, isPacked, id } = item;
   const listStyle = {
     textDecoration: isPacked ? "line-through" : "none",
   };
@@ -10,10 +10,10 @@ export default function Item({ item, toggleIsPacked, removeItem }) {
         type="checkbox"
         value={isPacked}
         checked={isPacked}
-        onChange={() => toggleIsPacked(item)}
+        onChange={() => onToggleItems(id)}
       />
       <span style={listStyle}>{`${quantity} ${description}`}</span>
-      <button onClick={() => removeItem(item)}>❌</button>
+      <button onClick={() => removeItems(id)}>❌</button>
     </li>
   );
 }

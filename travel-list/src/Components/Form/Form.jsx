@@ -1,7 +1,7 @@
 import { range } from "lodash";
 import { useId, useState } from "react";
 
-export default function Form({ items, setItems }) {
+export default function Form({ onAddItems }) {
   const [formData, setFormData] = useState({
     id: crypto.randomUUID(),
     description: "",
@@ -24,7 +24,7 @@ export default function Form({ items, setItems }) {
     if (formData.quantity === 0 || formData.description === "") {
       return;
     }
-    setItems([...items, formData]);
+    onAddItems(formData);
     setFormData({
       ...formData,
       id: crypto.randomUUID(),

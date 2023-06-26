@@ -1,22 +1,14 @@
 import Item from "./Item/Item";
 import Modal from "../Modal/Modal";
 import { useState } from "react";
-export default function PackingList({ items, setItems }) {
+export default function PackingList({
+  items,
+  setItems,
+  onDeleteItems,
+  onToggleItems,
+}) {
   const [showModal, setShowModal] = useState(false);
-  const toggleIsPacked = (i) => {
-    setItems((prevItems) => {
-      return prevItems.map((item) => {
-        return item.id === i.id ? { ...item, isPacked: !item.isPacked } : item;
-      });
-    });
-  };
-  const removeItem = (i) => {
-    setItems((prevItems) => {
-      return prevItems.filter((item) => {
-        return item.id !== i.id;
-      });
-    });
-  };
+
   const handleShowModal = () => {
     setShowModal(!showModal);
   };
@@ -36,8 +28,8 @@ export default function PackingList({ items, setItems }) {
               <Item
                 key={item.id}
                 item={item}
-                toggleIsPacked={toggleIsPacked}
-                removeItem={removeItem}
+                onToggleItems={onToggleItems}
+                removeItems={onDeleteItems}
               />
             );
           })}
