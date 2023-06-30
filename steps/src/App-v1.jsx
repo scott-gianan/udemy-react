@@ -38,7 +38,7 @@ const Steps = () => {
   return (
     <>
       <div onClick={toggle} className="close">
-        {isOpen ? "X" : "+"}
+        X
       </div>
       {isOpen && (
         <div className="steps">
@@ -51,37 +51,16 @@ const Steps = () => {
             Step: {step + 1} {messages[step]}
           </p>
           <div className="buttons">
-            <Button
-              bgColor="#7950f2"
-              textColor="#fff"
-              onClick={handlePreviousStep}
-              text="Previous"
-              emoji="👈"
-            />
-            <Button
-              bgColor="#7950f2"
-              textColor="#fff"
-              onClick={handleNextStep}
-              text="Next"
-              emoji="👉"
-            />
+            <button onClick={handlePreviousStep} className="btn">
+              Previous
+            </button>
+            <button onClick={handleNextStep} className="btn">
+              Next
+            </button>
           </div>
         </div>
       )}
     </>
   );
 };
-
-const Button = ({ textColor, bgColor, onClick, text, emoji }) => {
-  return (
-    <button
-      style={{ backgroundColor: bgColor, color: textColor }}
-      onClick={onClick}
-    >
-      <span>{emoji}</span>
-      {text}
-    </button>
-  );
-};
-
 export default App;
