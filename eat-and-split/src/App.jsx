@@ -1,11 +1,7 @@
 import "./App.scss";
 import FriendList from "./Components/Friendlist/Friendlist";
 function App() {
-  return (
-    <div className="app">
-      <FriendList />
-    </div>
-  );
+  return <FriendList />;
 }
 
 export default App;
