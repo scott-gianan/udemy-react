@@ -1,20 +1,73 @@
 import Button from "../../Button/Button";
-function Friend({ photoSrc, name, balance, isSelected }) {
+function Friend({ friend, onAddSelectFriend, setToggleBill }) {
+  const { id, name, photo, balance, isSelected } = friend;
+  let message;
   let status;
   if (balance === 0) {
-    status = `You and ${name} are even`;
+    message = `You and ${name} are even`;
   } else if (balance > 0) {
-    status = `${name} owes you money.`;
+    status = "green";
+    message = `${name} owes you money.`;
   } else if (balance < 0) {
-    status = `You owe ${name} money`;
+    status = "red";
+    message = `You owe ${name} money`;
+  }
+  return (
+    <li>
+      <img src={photo} alt={name} />
+      <h3>{name}</h3>
+      <p className={status}>{message}</p>
+      <Button
+        addOnClick={() => {
+          onAddSelectFriend(id);
+          setToggleBill(!isSelected);
+        }}
+      >
+        {isSelected ? "Close" : "Select"}
+      </Button>
+    </li>
+  );
+}
+export default Friend;
+
+/**
+ import Button from "../../Button/Button";
+function Friend({
+  friendId,
+  photoSrc,
+  name,
+  balance,
+  onAddSelectFriend,
+  isFriendSelected,
+  setToggleBill,
+}) {
+  let message;
+  let status;
+  if (balance === 0) {
+    message = `You and ${name} are even`;
+  } else if (balance > 0) {
+    status = "green";
+    message = `${name} owes you money.`;
+  } else if (balance < 0) {
+    status = "red";
+    message = `You owe ${name} money`;
   }
   return (
     <li>
       <img src={photoSrc} alt={name} />
       <h3>{name}</h3>
-      <p>{status}</p>
-      <Button>Test</Button>
+      <p className={status}>{message}</p>
+      <Button
+        addOnClick={() => {
+          onAddSelectFriend(friendId);
+          setToggleBill(!isFriendSelected);
+        }}
+      >
+        {isFriendSelected ? "Close" : "Select"}
+      </Button>
     </li>
   );
 }
 export default Friend;
+
+*/
