@@ -7,10 +7,10 @@ function Friend({ friend, onAddSelectFriend, setToggleBill }) {
     message = `You and ${name} are even`;
   } else if (balance > 0) {
     status = "green";
-    message = `${name} owes you money.`;
+    message = `${name} owes you ₱ ${balance}.`;
   } else if (balance < 0) {
     status = "red";
-    message = `You owe ${name} money`;
+    message = `You owe ${name} ₱ ${Math.abs(balance)}`;
   }
   return (
     <li>
@@ -29,45 +29,3 @@ function Friend({ friend, onAddSelectFriend, setToggleBill }) {
   );
 }
 export default Friend;
-
-/**
- import Button from "../../Button/Button";
-function Friend({
-  friendId,
-  photoSrc,
-  name,
-  balance,
-  onAddSelectFriend,
-  isFriendSelected,
-  setToggleBill,
-}) {
-  let message;
-  let status;
-  if (balance === 0) {
-    message = `You and ${name} are even`;
-  } else if (balance > 0) {
-    status = "green";
-    message = `${name} owes you money.`;
-  } else if (balance < 0) {
-    status = "red";
-    message = `You owe ${name} money`;
-  }
-  return (
-    <li>
-      <img src={photoSrc} alt={name} />
-      <h3>{name}</h3>
-      <p className={status}>{message}</p>
-      <Button
-        addOnClick={() => {
-          onAddSelectFriend(friendId);
-          setToggleBill(!isFriendSelected);
-        }}
-      >
-        {isFriendSelected ? "Close" : "Select"}
-      </Button>
-    </li>
-  );
-}
-export default Friend;
-
-*/
