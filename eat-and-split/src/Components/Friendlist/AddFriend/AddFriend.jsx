@@ -36,6 +36,7 @@ function AddFriend({ isShown, onAddFriend }) {
           value={friend.name}
           id="name"
           onChange={handleOnChange}
+          required
         ></input>
         <label htmlFor="image-url">🌄 Image URL</label>
         <input
