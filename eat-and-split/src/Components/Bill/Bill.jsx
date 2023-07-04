@@ -3,7 +3,8 @@ import Button from "../Button/Button";
 function Bill({ isToggled, selectedFriend, setFriends, setToggleBill }) {
   const [bill, setBill] = useState("");
   const [myExpense, setMyExpense] = useState("");
-  const [payee, setPayee] = useState(true);
+  const [payee, setPayee] = useState("myself");
+  console.log(payee);
   const { id, balance, name } = selectedFriend;
   const friendExpense = Number(bill - myExpense);
   const handleChangeBill = (event) => {
@@ -16,9 +17,10 @@ function Bill({ isToggled, selectedFriend, setFriends, setToggleBill }) {
     }
     setMyExpense(() => expense);
   };
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    if (payee) {
+    if (payee === "myself") {
       setFriends((currFriends) => {
         return currFriends.map((friend) => {
           return friend.id === id
@@ -30,7 +32,7 @@ function Bill({ isToggled, selectedFriend, setFriends, setToggleBill }) {
       setFriends((currFriends) => {
         return currFriends.map((friend) => {
           return friend.id === id
-            ? { ...friend, balance: balance + myExpense, isSelected: false }
+            ? { ...friend, balance: balance - myExpense, isSelected: false }
             : friend;
         });
       });
@@ -38,7 +40,7 @@ function Bill({ isToggled, selectedFriend, setFriends, setToggleBill }) {
     setToggleBill((v) => !v);
     setBill("");
     setMyExpense("");
-    setPayee(true);
+    setPayee("myself");
   };
   return (
     isToggled && (
@@ -67,8 +69,8 @@ function Bill({ isToggled, selectedFriend, setFriends, setToggleBill }) {
           value={payee}
           onChange={(e) => setPayee(e.target.value)}
         >
-          <option value={true}>You</option>
-          <option value={false}>{name}</option>
+          <option value="myself">You</option>
+          <option value="friend">{name}</option>
         </select>
         <Button>Split Bill</Button>
       </form>
