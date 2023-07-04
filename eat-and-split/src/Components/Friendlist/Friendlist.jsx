@@ -32,6 +32,7 @@ function FriendList() {
       });
     });
   };
+
   return (
     <div className="app">
       <div className="sidebar">
@@ -52,25 +53,14 @@ function FriendList() {
           {toggleAddFriend ? "Close" : "Add Friend"}
         </Button>
       </div>
-      <Bill isToggled={toggleBill} selectedFriend={selectedFriend} />
+      <Bill
+        isToggled={toggleBill}
+        selectedFriend={selectedFriend}
+        setFriends={setFriends}
+        setToggleBill={setToggleBill}
+      />
     </div>
   );
 }
 
 export default FriendList;
-{
-  /* {friends.map(({ id, name, photo, balance, isSelected }) => {
-            return (
-              <Friend
-                key={id}
-                friendId={id}
-                name={name}
-                photoSrc={photo}
-                balance={balance}
-                onAddSelectFriend={selectFriend}
-                isFriendSelected={isSelected}
-                setToggleBill={setToggleBill}
-              />
-            );
-          })} */
-}
