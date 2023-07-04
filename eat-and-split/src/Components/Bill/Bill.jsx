@@ -20,23 +20,19 @@ function Bill({ isToggled, selectedFriend, setFriends, setToggleBill }) {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    if (payee === "myself") {
-      setFriends((currFriends) => {
-        return currFriends.map((friend) => {
-          return friend.id === id
-            ? { ...friend, balance: balance + friendExpense, isSelected: false }
-            : friend;
-        });
+    setFriends((currFriends) => {
+      return currFriends.map((friend) => {
+        const finalBalance =
+          payee === "myself" ? balance + friendExpense : balance - myExpense;
+        return friend.id === id
+          ? {
+              ...friend,
+              balance: finalBalance,
+              isSelected: false,
+            }
+          : friend;
       });
-    } else {
-      setFriends((currFriends) => {
-        return currFriends.map((friend) => {
-          return friend.id === id
-            ? { ...friend, balance: balance - myExpense, isSelected: false }
-            : friend;
-        });
-      });
-    }
+    });
     setToggleBill((v) => !v);
     setBill("");
     setMyExpense("");
