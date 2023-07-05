@@ -31,6 +31,7 @@ function FriendList() {
           : { ...friend, isSelected: false };
       });
     });
+    setToggleAddFriend(false);
   };
   const handleSplitBill = (id, payee, friendExpense, myExpense) => {
     setFriends((currentFriends) => {
