@@ -20,6 +20,9 @@ function Bill({ isToggled, selectedFriend, onAddSplitBill }) {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
+    if (!bill || !myExpense) {
+      return;
+    }
     onAddSplitBill(id, payee, friendExpense, myExpense);
     setBill("");
     setMyExpense("");
