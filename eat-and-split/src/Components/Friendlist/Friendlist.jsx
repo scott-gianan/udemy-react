@@ -68,6 +68,7 @@ function FriendList() {
         </Button>
       </div>
       <Bill
+        key={selectedFriend.id}
         isToggled={toggleBill}
         selectedFriend={selectedFriend}
         setFriends={setFriends}
