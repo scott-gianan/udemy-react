@@ -1,5 +1,5 @@
 import Button from "../../Button/Button";
-function Friend({ friend, onAddSelectFriend }) {
+function Friend({ friend, onAddSelectFriend, setToggleBill }) {
   const { id, name, photo, balance, isSelected } = friend;
   let message;
   let status;
@@ -13,13 +13,14 @@ function Friend({ friend, onAddSelectFriend }) {
     message = `You owe ${name} ₱ ${Math.abs(balance)}`;
   }
   return (
-    <li>
+    <li className={isSelected ? "selected" : ""}>
       <img src={photo} alt={name} />
       <h3>{name}</h3>
       <p className={status}>{message}</p>
       <Button
         addOnClick={() => {
           onAddSelectFriend(id);
+          setToggleBill(!isSelected);
         }}
       >
         {isSelected ? "Close" : "Select"}
