@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "../Button/Button";
-function Bill({ isToggled, selectedFriend, setFriends, setToggleBill }) {
+function Bill({ isToggled, selectedFriend, onAddSplitBill }) {
   const [bill, setBill] = useState("");
   const [myExpense, setMyExpense] = useState("");
   const [payee, setPayee] = useState("myself");
@@ -18,22 +18,9 @@ function Bill({ isToggled, selectedFriend, setFriends, setToggleBill }) {
     setMyExpense(() => expense);
   };
 
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    setFriends((currFriends) => {
-      return currFriends.map((friend) => {
-        const finalBalance =
-          payee === "myself" ? balance + friendExpense : balance - myExpense;
-        return friend.id === id
-          ? {
-              ...friend,
-              balance: finalBalance,
-              isSelected: false,
-            }
-          : friend;
-      });
-    });
-    setToggleBill((v) => !v);
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+    onAddSplitBill(id, payee, friendExpense, myExpense);
     setBill("");
     setMyExpense("");
     setPayee("myself");

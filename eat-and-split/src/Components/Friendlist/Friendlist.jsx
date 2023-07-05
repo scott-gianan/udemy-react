@@ -32,7 +32,20 @@ function FriendList() {
       });
     });
   };
-
+  const handleSplitBill = (id, payee, friendExpense, myExpense) => {
+    setFriends((currentFriends) => {
+      return currentFriends.map((friend) => {
+        const finalBalance =
+          payee === "myself"
+            ? friend.balance + friendExpense
+            : friend.balance - myExpense;
+        return friend.id === id
+          ? { ...friend, balance: finalBalance, isSelected: false }
+          : friend;
+      });
+    });
+    setToggleBill((v) => !v);
+  };
   return (
     <div className="app">
       <div className="sidebar">
@@ -58,6 +71,7 @@ function FriendList() {
         selectedFriend={selectedFriend}
         setFriends={setFriends}
         setToggleBill={setToggleBill}
+        onAddSplitBill={handleSplitBill}
       />
     </div>
   );
