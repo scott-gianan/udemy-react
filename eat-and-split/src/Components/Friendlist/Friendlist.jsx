@@ -56,6 +56,7 @@ function FriendList() {
                 key={friend.id}
                 friend={friend}
                 onAddSelectFriend={selectFriend}
+                setToggleBill={setToggleBill}
               />
             );
           })}
