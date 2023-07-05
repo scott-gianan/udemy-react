@@ -1,5 +1,5 @@
 import Button from "../../Button/Button";
-function Friend({ friend, onAddSelectFriend, setToggleBill }) {
+function Friend({ friend, onAddSelectFriend }) {
   const { id, name, photo, balance, isSelected } = friend;
   let message;
   let status;
@@ -20,7 +20,6 @@ function Friend({ friend, onAddSelectFriend, setToggleBill }) {
       <Button
         addOnClick={() => {
           onAddSelectFriend(id);
-          setToggleBill(!isSelected);
         }}
       >
         {isSelected ? "Close" : "Select"}

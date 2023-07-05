@@ -18,7 +18,7 @@ function FriendList() {
     setFriends((currFriends) => [...currFriends, newFriend]);
   };
   const selectFriend = (friendId) => {
-    setToggleBill(true);
+    setToggleBill((b) => !b);
     friends.forEach((friend) => {
       if (friend.id === friendId) {
         setSelectedFriend(() => friend);
@@ -56,7 +56,6 @@ function FriendList() {
                 key={friend.id}
                 friend={friend}
                 onAddSelectFriend={selectFriend}
-                setToggleBill={setToggleBill}
               />
             );
           })}
