@@ -1,27 +1,25 @@
-//Components
-import WatchedMovie from "./WatchedMovie/WatchedMovie";
+//react hooks
 import { useState } from "react";
+//Components
+import ToggleButton from "../../../Components/ToggleButton/ToggleButton";
+import WatchedMovieList from "./WatchedMovieList/WatchedMovieList";
+//custom hooks
+import useToggle from "../../../Hooks/useToggle";
 //assets
-import { tempWatchedData } from "../../../assets/tempWatchedMovieData";
-
+import { tempMovieData } from "../../../assets/tempMovieData";
+console.log(tempMovieData);
 function WatchedBox() {
+  const [watched, setWatched] = useState(tempMovieData);
+  const [isOpen, toggle] = useToggle();
   const average = (arr) =>
     arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
-  const [watched, setWatched] = useState(tempWatchedData);
-  const [isOpen2, setIsOpen2] = useState(true);
-
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
   const avgRuntime = average(watched.map((movie) => movie.runtime));
   return (
     <div className="box">
-      <button
-        className="btn-toggle"
-        onClick={() => setIsOpen2((open) => !open)}
-      >
-        {isOpen2 ? "–" : "+"}
-      </button>
-      {isOpen2 && (
+      <ToggleButton onClick={toggle}>{isOpen ? "–" : "+"}</ToggleButton>
+      {isOpen && (
         <>
           <div className="summary">
             <h2>Movies you watched</h2>
@@ -44,12 +42,7 @@ function WatchedBox() {
               </p>
             </div>
           </div>
-
-          <ul className="list">
-            {watched.map((movie) => (
-              <WatchedMovie movie={movie} key={movie.imdbID} />
-            ))}
-          </ul>
+          <WatchedMovieList watchedMovies={watched} />
         </>
       )}
     </div>
