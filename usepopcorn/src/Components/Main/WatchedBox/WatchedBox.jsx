@@ -2,7 +2,7 @@
 import { useState } from "react";
 //Components
 import ToggleButton from "../../../Components/ToggleButton/ToggleButton";
-import WatchedMovieList from "./WatchedMovieList/WatchedMovieList";
+import WatchedMovieList from "./WatchedMoviesList/WatchedMoviesList";
 import WatchedSummary from "./WatchedSummary/WatchedSummary";
 //custom hooks
 import useToggle from "../../../Hooks/useToggle";
