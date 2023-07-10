@@ -1,9 +1,7 @@
 //react hooks
-import { useState } from "react";
 //components
 import WatchedMovie from "../WatchedMovie/WatchedMovie";
 //assets
-import { tempMovieData } from "../../../../assets/tempMovieData";
 
 function WatchedMovieList({ watchedMovies }) {
   return (

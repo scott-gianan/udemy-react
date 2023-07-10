@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { tempMovieData } from "../../../../assets/tempMovieData";
 import Movie from "../Movie/Movie";
-tempMovieData;
 
 function MovieList() {
   const [movies, setMovies] = useState(tempMovieData);
