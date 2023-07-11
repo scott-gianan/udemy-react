@@ -1,28 +1,23 @@
-//react hooks
-import { useState } from "react";
-//Components
-import ToggleButton from "../../../Components/ToggleButton/ToggleButton";
-import WatchedMovieList from "./WatchedMoviesList/WatchedMoviesList";
-import WatchedSummary from "./WatchedSummary/WatchedSummary";
-//custom hooks
-import useToggle from "../../../Hooks/useToggle";
-//assets
-import { tempWatchedMovieData } from "../../../assets/tempWatchedMovieData";
-function WatchedBox() {
-  const [watched, setWatched] = useState(tempWatchedMovieData);
-  const [isOpen, toggle] = useToggle();
+// //react hooks
+// import { useState } from "react";
+// //Components
+// import Box from "../../Box/Box";
+// import ToggleButton from "../../../Components/ToggleButton/ToggleButton";
+// import WatchedMovieList from "./WatchedMoviesList/WatchedMoviesList";
+// import WatchedSummary from "./WatchedSummary/WatchedSummary";
+// //custom hooks
+// import useToggle from "../../../Hooks/useToggle";
+// //assets
+// import { tempWatchedMovieData } from "../../../assets/tempWatchedMovieData";
+// function WatchedBox() {
+//   const [watched, setWatched] = useState(tempWatchedMovieData);
 
-  return (
-    <div className="box">
-      <ToggleButton onClick={toggle}>{isOpen ? "–" : "+"}</ToggleButton>
-      {isOpen && (
-        <>
-          <WatchedSummary watchedMovies={watched} />
-          <WatchedMovieList watchedMovies={watched} />
-        </>
-      )}
-    </div>
-  );
-}
+//   return (
+//     <Box>
+//       <WatchedSummary watchedMovies={watched} />
+//       <WatchedMovieList watchedMovies={watched} />
+//     </Box>
+//   );
+// }
 
-export default WatchedBox;
+// export default WatchedBox;
