@@ -3,12 +3,11 @@ import NumResults from "./NumResults/NumResults";
 import Logo from "./Logo/Logo";
 import Search from "./Search/Search";
 
-function Navbar() {
+function Navbar({ children }) {
   return (
     <nav className="nav-bar">
       <Logo />
-      <Search />
-      <NumResults />
+      {children}
     </nav>
   );
 }
