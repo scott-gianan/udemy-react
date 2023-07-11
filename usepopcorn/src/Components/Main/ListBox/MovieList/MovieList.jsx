@@ -1,10 +1,6 @@
-//react hooks
-import { useState } from "react";
-import { tempMovieData } from "../../../../assets/tempMovieData";
 import Movie from "../Movie/Movie";
 
-function MovieList() {
-  const [movies, setMovies] = useState(tempMovieData);
+function MovieList({ movies }) {
   return (
     <ul className="list">
       {movies?.map((movie) => (
