@@ -18,12 +18,12 @@ const starStyle = {
 const textStyle = {
   lineHeight: "1",
   margin: "0",
+  fontSize: "2.5rem",
 };
 
 function StarRating({ maxRating = 5 }) {
   const [rating, setRating] = useState(0);
   const [tempRating, setTempRating] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
   const handleRating = (value) => {
     setRating(() => value);
   };
@@ -34,9 +34,7 @@ function StarRating({ maxRating = 5 }) {
     <div style={containerStyle}>
       <div
         style={starContainerStyle}
-        onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => {
-          setIsHovering(false);
           setTempRating(0);
         }}
       >
@@ -47,26 +45,28 @@ function StarRating({ maxRating = 5 }) {
             <Star
               key={i}
               isFull={
-                isHovering ? starRating <= tempRating : starRating <= rating
+                tempRating ? starRating <= tempRating : starRating <= rating
               }
               onRate={() => handleRating(starRating)}
-              onMouseHover={() => handleHoverRating(starRating)}
+              onMouseEnter={() => handleHoverRating(starRating)}
+              onMouseLeave={() => handleHoverRating(0)}
             />
           );
         })}
       </div>
-      <p style={textStyle}>{isHovering ? tempRating : rating}</p>
+      <p style={textStyle}>{tempRating ? tempRating : rating || ""}</p>
     </div>
   );
 }
 
-function Star({ onRate, isFull, onMouseHover }) {
+function Star({ onRate, isFull, onMouseEnter, onMouseLeave }) {
   return (
     <span
       role="button"
       style={starStyle}
       onClick={onRate}
-      onMouseEnter={onMouseHover}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {isFull ? (
         <svg
