@@ -7,6 +7,9 @@ import StarRating from "./Components/StarRating/StarRating";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     {/* <App /> */}
-    <StarRating maxRating={10} />
+    <StarRating
+      maxRating={5}
+      messages={["Terrible", "Bad", "Okay", "Good", "Amazing"]}
+    />
   </React.StrictMode>
 );
