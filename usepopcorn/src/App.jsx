@@ -24,6 +24,7 @@ export default function App() {
   const [isDataFetching, setIsDataFetching] = useState(false);
   const [error, setError] = useState("");
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [userRating, setUserRating] = useState(0);
 
   const handleMovieSearch = async (query) => {
     try {
@@ -65,6 +66,21 @@ export default function App() {
   const handleCloseMovie = () => {
     setSelectedMovie(null);
   };
+  const handleAddMovie = () => {
+    setWatchedMovies((previousMovies) => {
+      const addedMovie = {
+        imdbID: selectedMovie.imdbID,
+        Title: selectedMovie.Title,
+        Year: selectedMovie.Year,
+        Poster: selectedMovie.Poster,
+        runtime: Number(selectedMovie.Runtime.match(/\d+/g).toString()),
+        imdbRating: selectedMovie.imdbRating,
+        userRating: 0,
+      };
+      return [...previousMovies, addedMovie];
+    });
+  };
+  console.log(selectedMovie);
   return (
     <>
       <Navbar>
@@ -86,6 +102,7 @@ export default function App() {
             <SpecificMovie
               movie={selectedMovie}
               onCloseMovie={handleCloseMovie}
+              onAddMovie={handleAddMovie}
             />
           ) : (
             <>

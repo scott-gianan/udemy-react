@@ -1,4 +1,6 @@
-function SpecificMovie({ movie, onCloseMovie }) {
+import StarRating from "../../Components/StarRating/StarRating";
+
+function SpecificMovie({ movie, onCloseMovie, onAddMovie }) {
   return (
     <div className="details">
       <header>
@@ -16,10 +18,14 @@ function SpecificMovie({ movie, onCloseMovie }) {
             <span>⭐️</span>
             {movie.imdbRating} IMDb rating
           </p>
-          <button className="btn-add">+</button>
+          <button className="btn-add" onClick={onAddMovie}>
+            +
+          </button>
         </div>
       </header>
+
       <section>
+        <StarRating maxRating={10} size={25} className="details-overview" />
         <p>{movie.Plot}</p>
       </section>
     </div>
