@@ -75,10 +75,11 @@ export default function App() {
         Poster: selectedMovie.Poster,
         runtime: Number(selectedMovie.Runtime.match(/\d+/g).toString()),
         imdbRating: selectedMovie.imdbRating,
-        userRating: 0,
+        userRating: userRating,
       };
       return [...previousMovies, addedMovie];
     });
+    setSelectedMovie(null);
   };
   console.log(selectedMovie);
   return (
@@ -103,6 +104,7 @@ export default function App() {
               movie={selectedMovie}
               onCloseMovie={handleCloseMovie}
               onAddMovie={handleAddMovie}
+              onSetUserRating={setUserRating}
             />
           ) : (
             <>

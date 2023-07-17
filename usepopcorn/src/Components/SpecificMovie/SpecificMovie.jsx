@@ -1,6 +1,6 @@
 import StarRating from "../../Components/StarRating/StarRating";
 
-function SpecificMovie({ movie, onCloseMovie, onAddMovie }) {
+function SpecificMovie({ movie, onCloseMovie, onAddMovie, onSetUserRating }) {
   return (
     <div className="details">
       <header>
@@ -25,7 +25,12 @@ function SpecificMovie({ movie, onCloseMovie, onAddMovie }) {
       </header>
 
       <section>
-        <StarRating maxRating={10} size={25} className="details-overview" />
+        <StarRating
+          maxRating={10}
+          size={25}
+          className="details-overview"
+          onSetRating={onSetUserRating}
+        />
         <p>{movie.Plot}</p>
       </section>
     </div>
