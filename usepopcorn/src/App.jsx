@@ -53,7 +53,6 @@ export default function App() {
       );
       const data = await response.json();
       if (data.Response === "False") {
-        console.log("this fired up error");
         throw new Error("No Movies Found");
       }
       setMovies([...data.Search]);
