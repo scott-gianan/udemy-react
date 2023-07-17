@@ -189,19 +189,19 @@ body {
 }
 
 .btn-delete {
-  position: absolute;
-  right: 2.4rem;
-
+  width: 2rem;
   height: 1.8rem;
-  aspect-ratio: 1;
-  border-radius: 50%;
+  border-radius: 25%;
   border: none;
   background-color: var(--color-red);
-  color: var(--color-background-900);
-  font-size: 0.9rem;
+  color: white;
+  font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-delete:hover {
