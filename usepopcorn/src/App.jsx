@@ -81,7 +81,11 @@ export default function App() {
     });
     setSelectedMovie(null);
   };
-  console.log(selectedMovie);
+  const handleDeleteMovie = (selectedId) => {
+    setWatchedMovies((previousMovies) => {
+      return previousMovies.filter((movie) => movie.imdbID !== selectedId);
+    });
+  };
   return (
     <>
       <Navbar>
@@ -109,7 +113,10 @@ export default function App() {
           ) : (
             <>
               <WatchedSummary watchedMovies={watchedMovies} />
-              <WatchedMovieList watchedMovies={watchedMovies} />
+              <WatchedMovieList
+                watchedMovies={watchedMovies}
+                handleDeleteMovie={handleDeleteMovie}
+              />
             </>
           )}
         </Box>
