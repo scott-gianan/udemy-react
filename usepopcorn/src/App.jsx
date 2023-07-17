@@ -19,19 +19,50 @@ import { tempWatchedMovieData } from "./assets/tempWatchedMovieData";
 //constant
 const KEY = "5abe5097";
 export default function App() {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(tempMovieData);
   const [watchedMovies, setWatchedMovies] = useState(tempWatchedMovieData);
-  useEffect(() => {}, []);
+  const [isDataFetching, setIsDataFetching] = useState(false);
+  const [error, setError] = useState("");
+  // useEffect(() => {
+  //   async function fetchMovies() {
+  //     try {
+  //       setIsDataFetching(true);
+  //       const response = await fetch(
+  //         `http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`
+  //       );
+  //       const data = await response.json();
+  //       if (data.Response === "False") {
+  //         console.log("error");
+  //         throw new Error("Something Went Wrong");
+  //       }
+  //       setMovies([...data.Search]);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     } finally {
+  //       setIsDataFetching(false);
+  //     }
+  //   }
+  //   fetchMovies();
+  // }, []);
   const handleMovieSearch = async (query) => {
-    const response = await fetch(
-      `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
-    );
-    const data = await response.json();
-    if (data.Response === "True") {
+    try {
+      setIsDataFetching(true);
+      setMovies([]);
+      const response = await fetch(
+        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+      );
+      const data = await response.json();
+      if (data.Response === "False") {
+        console.log("this fired up error");
+        throw new Error("No Movies Found");
+      }
       setMovies([...data.Search]);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsDataFetching(false);
     }
   };
-
   return (
     <>
       <Navbar>
@@ -40,8 +71,8 @@ export default function App() {
       </Navbar>
       <Main>
         <Box>
-          <Loader />
-          <MovieList movies={movies} />
+          {error && movies.length === 0 && <h1 className="error">{error}</h1>}
+          {isDataFetching ? <Loader /> : <MovieList movies={movies} />}
         </Box>
         <Box>
           <WatchedSummary watchedMovies={watchedMovies} />
