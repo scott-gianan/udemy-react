@@ -1,5 +1,5 @@
 //react hooks
-import { useEffect, useState } from "react";
+import { useState } from "react";
 //Components
 import Box from "./Components/Box/Box";
 import Navbar from "./Components/Navigation/Navbar";
@@ -10,7 +10,7 @@ import Main from "./Components/Main/Main";
 import WatchedSummary from "./Components/Main/WatchedBox/WatchedSummary/WatchedSummary";
 import WatchedMovieList from "./Components/Main/WatchedBox/WatchedMoviesList/WatchedMoviesList";
 import Loader from "./Components/Loader/Loader";
-
+import SpecificMovie from "./Components/SpecificMovie/SpecificMovie";
 //css
 import "./App.css";
 //assets
@@ -23,31 +23,14 @@ export default function App() {
   const [watchedMovies, setWatchedMovies] = useState(tempWatchedMovieData);
   const [isDataFetching, setIsDataFetching] = useState(false);
   const [error, setError] = useState("");
-  // useEffect(() => {
-  //   async function fetchMovies() {
-  //     try {
-  //       setIsDataFetching(true);
-  //       const response = await fetch(
-  //         `http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`
-  //       );
-  //       const data = await response.json();
-  //       if (data.Response === "False") {
-  //         console.log("error");
-  //         throw new Error("Something Went Wrong");
-  //       }
-  //       setMovies([...data.Search]);
-  //     } catch (error) {
-  //       setError(error.message);
-  //     } finally {
-  //       setIsDataFetching(false);
-  //     }
-  //   }
-  //   fetchMovies();
-  // }, []);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+
   const handleMovieSearch = async (query) => {
     try {
       setIsDataFetching(true);
       setMovies([]);
+      setError("");
+      setSelectedMovie(null);
       const response = await fetch(
         `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
       );
@@ -62,6 +45,26 @@ export default function App() {
       setIsDataFetching(false);
     }
   };
+  const handleSelectMovie = async (id) => {
+    try {
+      setSelectedMovie(null);
+      const response = await fetch(
+        `http://www.omdbapi.com/?apikey=5abe5097&i=${id}`
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error("Something Went Wrong");
+      }
+      setSelectedMovie(data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setError("");
+    }
+  };
+  const handleCloseMovie = () => {
+    setSelectedMovie(null);
+  };
   return (
     <>
       <Navbar>
@@ -70,14 +73,50 @@ export default function App() {
       </Navbar>
       <Main>
         <Box>
-          {error && movies.length === 0 && <h1 className="error">{error}</h1>}
-          {isDataFetching ? <Loader /> : <MovieList movies={movies} />}
+          {error && <h1 className="error">{error}</h1>}
+          {isDataFetching && selectedMovie === null ? (
+            <Loader />
+          ) : (
+            <MovieList movies={movies} onSelectedMovie={handleSelectMovie} />
+          )}
         </Box>
         <Box>
-          <WatchedSummary watchedMovies={watchedMovies} />
-          <WatchedMovieList watchedMovies={watchedMovies} />
+          {isDataFetching && <p>loading</p>}
+          {selectedMovie ? (
+            <SpecificMovie
+              movie={selectedMovie}
+              onCloseMovie={handleCloseMovie}
+            />
+          ) : (
+            <>
+              <WatchedSummary watchedMovies={watchedMovies} />
+              <WatchedMovieList watchedMovies={watchedMovies} />
+            </>
+          )}
         </Box>
       </Main>
     </>
   );
 }
+
+// useEffect(() => {
+//   async function fetchMovies() {
+//     try {
+//       setIsDataFetching(true);
+//       const response = await fetch(
+//         `http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`
+//       );
+//       const data = await response.json();
+//       if (data.Response === "False") {
+//         console.log("error");
+//         throw new Error("Something Went Wrong");
+//       }
+//       setMovies([...data.Search]);
+//     } catch (error) {
+//       setError(error.message);
+//     } finally {
+//       setIsDataFetching(false);
+//     }
+//   }
+//   fetchMovies();
+// }, []);
