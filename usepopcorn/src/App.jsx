@@ -25,7 +25,6 @@ export default function App() {
   const [error, setError] = useState("");
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [userRating, setUserRating] = useState(0);
-
   const handleMovieSearch = async (query) => {
     try {
       setIsDataFetching(true);
@@ -56,6 +55,7 @@ export default function App() {
       if (!response.ok) {
         throw new Error("Something Went Wrong");
       }
+
       setSelectedMovie(data);
     } catch (error) {
       setError(error);
@@ -102,7 +102,6 @@ export default function App() {
           )}
         </Box>
         <Box>
-          {isDataFetching && <p>loading</p>}
           {selectedMovie ? (
             <SpecificMovie
               movie={selectedMovie}

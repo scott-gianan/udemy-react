@@ -1,5 +1,4 @@
 import StarRating from "../../Components/StarRating/StarRating";
-
 function SpecificMovie({ movie, onCloseMovie, onAddMovie, onSetUserRating }) {
   return (
     <div className="details">
