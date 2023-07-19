@@ -65,10 +65,13 @@ export default function App() {
     }
   };
   const handleSelectMovie = async (id) => {
+    if (selectedMovie?.imdbID === id) {
+      return;
+    }
     try {
+      setSelectedMovie(null);
       setIsSelectedMovieDataFetching(true);
       setSelectMovieError("");
-      setSelectedMovie(null);
       const response = await fetch(
         `http://www.omdbapi.com/?apikey=5abe5097&i=${id}`
       );
@@ -123,31 +126,57 @@ export default function App() {
           )}
         </Box>
         <Box>
-          {selectMovieError && <p>{selectMovieError}</p>}
+          {selectMovieError && <h1>{selectMovieError}</h1>}
           {isSelectedMovieDataFetching && <Loader />}
-          {selectedMovie && (
+          {selectedMovie ? (
             <SpecificMovie
               movie={selectedMovie}
               onCloseMovie={handleCloseMovie}
               onAddMovie={handleAddMovie}
               onSetUserRating={setUserRating}
             />
-          )}
-          {!isSelectedMovieDataFetching && !selectedMovie && (
-            <>
-              <WatchedSummary watchedMovies={watchedMovies} />
-              <WatchedMovieList
-                watchedMovies={watchedMovies}
-                handleDeleteMovie={handleDeleteMovie}
-              />
-            </>
+          ) : (
+            !isSelectedMovieDataFetching &&
+            !selectMovieError && (
+              <>
+                <WatchedSummary watchedMovies={watchedMovies} />
+                <WatchedMovieList
+                  watchedMovies={watchedMovies}
+                  handleDeleteMovie={handleDeleteMovie}
+                />
+              </>
+            )
           )}
         </Box>
       </Main>
     </>
   );
 }
-
+// {
+//   selectedMovie &&
+//     !isSelectedMovieDataFetching &&
+//     !selectMovieError && (
+//       <SpecificMovie
+//         movie={selectedMovie}
+//         onCloseMovie={handleCloseMovie}
+//         onAddMovie={handleAddMovie}
+//         onSetUserRating={setUserRating}
+//       />
+//     );
+// }
+// {
+//   !isSelectedMovieDataFetching &&
+//     !selectedMovie &&
+//     !selectMovieError && (
+//       <>
+//         <WatchedSummary watchedMovies={watchedMovies} />
+//         <WatchedMovieList
+//           watchedMovies={watchedMovies}
+//           handleDeleteMovie={handleDeleteMovie}
+//         />
+//       </>
+//     );
+// }
 // useEffect(() => {
 //   async function fetchMovies() {
 //     try {
