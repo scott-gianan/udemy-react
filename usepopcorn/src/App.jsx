@@ -18,49 +18,59 @@ import { tempMovieData } from "./assets/tempMovieData";
 import { tempWatchedMovieData } from "./assets/tempWatchedMovieData";
 //constant
 const KEY = "5abe5097";
+//custom hooks
+import useHandleLoader from "./Hooks/useHandleLoader";
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watchedMovies, setWatchedMovies] = useState(tempWatchedMovieData);
-  const [isDataFetching, setIsDataFetching] = useState(false);
-  const [error, setError] = useState("");
+  const [searchError, setSearchError, isSearchingMovies, setIsSearchingMovies] =
+    useHandleLoader();
+  const [
+    selectMovieError,
+    setSelectMovieError,
+    isSelectedMovieDataFetching,
+    setIsSelectedMovieDataFetching,
+  ] = useHandleLoader();
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [userRating, setUserRating] = useState(0);
+
   const handleMovieSearch = async (query) => {
     try {
-      setIsDataFetching(true);
+      setIsSearchingMovies(true);
       setMovies([]);
-      setError("");
+      setSearchError("");
       setSelectedMovie(null);
       const response = await fetch(
         `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
       );
       const data = await response.json();
-      console.log(data);
       if (data.Response === "False") {
         throw new Error(data.Error);
       }
       setMovies([...data.Search]);
     } catch (error) {
-      setError(error.message);
+      setSearchError(error.message);
     } finally {
-      setIsDataFetching(false);
+      setIsSearchingMovies(false);
     }
   };
   const handleSelectMovie = async (id) => {
     try {
+      setIsSelectedMovieDataFetching(true);
+      setSelectMovieError("");
       setSelectedMovie(null);
       const response = await fetch(
         `http://www.omdbapi.com/?apikey=5abe5097&i=${id}`
       );
       const data = await response.json();
       if (!response.ok) {
-        throw new Error("Something Went Wrong");
+        throw new Error(data.Error);
       }
       setSelectedMovie(data);
     } catch (error) {
-      setError(error);
+      setSelectMovieError(error.message);
     } finally {
-      setError("");
+      setIsSelectedMovieDataFetching(false);
     }
   };
   const handleCloseMovie = () => {
@@ -86,6 +96,7 @@ export default function App() {
       return previousMovies.filter((movie) => movie.imdbID !== selectedId);
     });
   };
+
   return (
     <>
       <Navbar>
@@ -94,22 +105,25 @@ export default function App() {
       </Navbar>
       <Main>
         <Box>
-          {error && <h1 className="error">{error}</h1>}
-          {isDataFetching && selectedMovie === null ? (
+          {searchError && <h1 className="error">{error}</h1>}
+          {isSearchingMovies && selectedMovie === null ? (
             <Loader />
           ) : (
             <MovieList movies={movies} onSelectedMovie={handleSelectMovie} />
           )}
         </Box>
         <Box>
-          {selectedMovie ? (
+          {selectMovieError && <p>{selectMovieError}</p>}
+          {isSelectedMovieDataFetching && <Loader />}
+          {selectedMovie && (
             <SpecificMovie
               movie={selectedMovie}
               onCloseMovie={handleCloseMovie}
               onAddMovie={handleAddMovie}
               onSetUserRating={setUserRating}
             />
-          ) : (
+          )}
+          {!isSelectedMovieDataFetching && !selectedMovie && (
             <>
               <WatchedSummary watchedMovies={watchedMovies} />
               <WatchedMovieList
