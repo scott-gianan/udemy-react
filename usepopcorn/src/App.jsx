@@ -1,5 +1,5 @@
 //react hooks
-import { useState } from "react";
+import { useState, useEffect } from "react";
 //Components
 import Box from "./Components/Box/Box";
 import Navbar from "./Components/Navigation/Navbar";
@@ -33,6 +33,16 @@ export default function App() {
   ] = useHandleLoader();
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [userRating, setUserRating] = useState(0);
+
+  useEffect(() => {
+    if (!selectedMovie) return;
+    const previousTitle = document.title;
+    document.title = selectedMovie.Title;
+
+    return () => {
+      document.title = previousTitle;
+    };
+  }, [selectedMovie]);
 
   const handleMovieSearch = async (query) => {
     try {
