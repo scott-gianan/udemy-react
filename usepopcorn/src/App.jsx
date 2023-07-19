@@ -35,8 +35,9 @@ export default function App() {
         `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
       );
       const data = await response.json();
+      console.log(data);
       if (data.Response === "False") {
-        throw new Error("No Movies Found");
+        throw new Error(data.Error);
       }
       setMovies([...data.Search]);
     } catch (error) {
@@ -55,7 +56,6 @@ export default function App() {
       if (!response.ok) {
         throw new Error("Something Went Wrong");
       }
-
       setSelectedMovie(data);
     } catch (error) {
       setError(error);
