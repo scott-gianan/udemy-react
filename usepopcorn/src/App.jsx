@@ -16,6 +16,7 @@ import "./App.css";
 //assets
 import { tempMovieData } from "./assets/tempMovieData";
 import { tempWatchedMovieData } from "./assets/tempWatchedMovieData";
+import Error from "./Components/Error/Error";
 //constant
 const KEY = "5abe5097";
 //custom hooks
@@ -118,7 +119,7 @@ export default function App() {
       </Navbar>
       <Main>
         <Box>
-          {searchError && <h1 className="error">{error}</h1>}
+          {searchError && <Error>{searchError}</Error>}
           {isSearchingMovies && selectedMovie === null ? (
             <Loader />
           ) : (
@@ -126,7 +127,7 @@ export default function App() {
           )}
         </Box>
         <Box>
-          {selectMovieError && <h1>{selectMovieError}</h1>}
+          {selectMovieError && <Error>{selectMovieError}</Error>}
           {isSelectedMovieDataFetching && <Loader />}
           {selectedMovie ? (
             <SpecificMovie
