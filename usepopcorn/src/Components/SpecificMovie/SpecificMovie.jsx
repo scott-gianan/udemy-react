@@ -1,5 +1,17 @@
 import StarRating from "../../Components/StarRating/StarRating";
-function SpecificMovie({ movie, onCloseMovie, onAddMovie, onSetUserRating }) {
+function SpecificMovie({
+  hasUserRating,
+  movie,
+  onCloseMovie,
+  onAddMovie,
+  onSetUserRating,
+  watchedMoviesList,
+}) {
+  console.log(movie);
+  console.log(watchedMoviesList);
+  const isMovieWatched = watchedMoviesList.some(
+    (watchedMovie) => watchedMovie.imdbID === movie.imdbID
+  );
   return (
     <div className="details">
       <header>
@@ -17,9 +29,11 @@ function SpecificMovie({ movie, onCloseMovie, onAddMovie, onSetUserRating }) {
             <span>⭐️</span>
             {movie.imdbRating} IMDb rating
           </p>
-          <button className="btn-add" onClick={onAddMovie}>
-            +
-          </button>
+          {hasUserRating > 0 && (
+            <button className="btn-add" onClick={onAddMovie}>
+              Add to Movie list
+            </button>
+          )}
         </div>
       </header>
 
