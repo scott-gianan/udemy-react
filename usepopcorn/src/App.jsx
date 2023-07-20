@@ -73,6 +73,7 @@ export default function App() {
       setSelectedMovie(null);
       setIsSelectedMovieDataFetching(true);
       setSelectMovieError("");
+      setUserRating(0);
       const response = await fetch(
         `http://www.omdbapi.com/?apikey=5abe5097&i=${id}`
       );
@@ -135,6 +136,8 @@ export default function App() {
               onCloseMovie={handleCloseMovie}
               onAddMovie={handleAddMovie}
               onSetUserRating={setUserRating}
+              hasUserRating={userRating}
+              watchedMoviesList={watchedMovies}
             />
           ) : (
             !isSelectedMovieDataFetching &&
