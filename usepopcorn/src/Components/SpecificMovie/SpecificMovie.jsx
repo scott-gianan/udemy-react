@@ -19,7 +19,20 @@ function SpecificMovie({
     return () => {
       document.title = defaultWindowTitle;
     };
+  }, [movie]);
+  useEffect(() => {
+    const handleEscapeKey = (event) => {
+      const pressedKey = event.key;
+      if (pressedKey === "Escape") {
+        onCloseMovie();
+      }
+    };
+    window.addEventListener("keydown", handleEscapeKey);
+    return () => {
+      window.removeEventListener("keydown", handleEscapeKey);
+    };
   }, []);
+
   return (
     <div className="details">
       <header>
