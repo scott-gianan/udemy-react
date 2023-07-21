@@ -7,11 +7,10 @@ function SpecificMovie({
   onSetUserRating,
   watchedMoviesList,
 }) {
-  console.log(movie);
-  console.log(watchedMoviesList);
   const isMovieWatched = watchedMoviesList.some(
     (watchedMovie) => watchedMovie.imdbID === movie.imdbID
   );
+  const watchedMovie = watchedMoviesList.find((m) => m.imdbID === movie.imdbID);
   return (
     <div className="details">
       <header>
@@ -40,7 +39,12 @@ function SpecificMovie({
       <section>
         <div className="rating">
           {isMovieWatched ? (
-            <p>your rating for this movie is 1</p>
+            <p>
+              <em>
+                You have a rating of {watchedMovie.userRating}⭐ stars for this
+                movie
+              </em>
+            </p>
           ) : (
             <StarRating
               maxRating={10}
