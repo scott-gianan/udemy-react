@@ -38,12 +38,17 @@ function SpecificMovie({
       </header>
 
       <section>
-        <StarRating
-          maxRating={10}
-          size={25}
-          className="details-overview"
-          onSetRating={onSetUserRating}
-        />
+        <div className="rating">
+          {isMovieWatched ? (
+            <p>your rating for this movie is 1</p>
+          ) : (
+            <StarRating
+              maxRating={10}
+              size={25}
+              onSetRating={onSetUserRating}
+            />
+          )}
+        </div>
         <p>{movie.Plot}</p>
       </section>
     </div>
