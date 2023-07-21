@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import StarRating from "../../Components/StarRating/StarRating";
 function SpecificMovie({
   hasUserRating,
@@ -11,6 +12,14 @@ function SpecificMovie({
     (watchedMovie) => watchedMovie.imdbID === movie.imdbID
   );
   const watchedMovie = watchedMoviesList.find((m) => m.imdbID === movie.imdbID);
+  useEffect(() => {
+    if (!movie) return;
+    const defaultWindowTitle = document.title;
+    document.title = `Movie: ${movie.Title}`;
+    return () => {
+      document.title = defaultWindowTitle;
+    };
+  }, []);
   return (
     <div className="details">
       <header>
