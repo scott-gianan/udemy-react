@@ -1,5 +1,5 @@
 //react hooks
-import { useState } from "react";
+import { useCallback, useState } from "react";
 //Components
 import Box from "./Components/Box/Box";
 import Navbar from "./Components/Navigation/Navbar";
@@ -78,9 +78,10 @@ export default function App() {
       setIsSelectedMovieDataFetching(false);
     }
   };
-  const handleCloseMovie = () => {
+
+  const handleCloseMovie = useCallback(() => {
     setSelectedMovie(null);
-  };
+  }, []);
   const handleAddMovie = () => {
     setWatchedMovies((previousMovies) => {
       const addedMovie = {
