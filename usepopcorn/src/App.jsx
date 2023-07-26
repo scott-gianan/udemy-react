@@ -1,5 +1,5 @@
 //react hooks
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 //Components
 import Box from "./Components/Box/Box";
 import Navbar from "./Components/Navigation/Navbar";
@@ -19,11 +19,14 @@ import { tempWatchedMovieData } from "./assets/tempWatchedMovieData";
 import Error from "./Components/Error/Error";
 //constant
 const KEY = "5abe5097";
+
 //custom hooks
 import useHandleLoader from "./Hooks/useHandleLoader";
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
-  const [watchedMovies, setWatchedMovies] = useState(tempWatchedMovieData);
+  const [watchedMovies, setWatchedMovies] = useState(() => {
+    return JSON.parse(localStorage.getItem("watchedMovies")) ?? [];
+  });
   const [searchError, setSearchError, isSearchingMovies, setIsSearchingMovies] =
     useHandleLoader();
   const [
@@ -34,7 +37,6 @@ export default function App() {
   ] = useHandleLoader();
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [userRating, setUserRating] = useState(0);
-
   const handleMovieSearch = async (query) => {
     try {
       setIsSearchingMovies(true);
@@ -93,16 +95,20 @@ export default function App() {
         imdbRating: selectedMovie.imdbRating,
         userRating: userRating,
       };
+
       return [...previousMovies, addedMovie];
     });
+    console.log(watchedMovies);
     setSelectedMovie(null);
   };
   const handleDeleteMovie = (selectedId) => {
-    setWatchedMovies((previousMovies) => {
-      return previousMovies.filter((movie) => movie.imdbID !== selectedId);
-    });
+    setWatchedMovies((previousMovies) =>
+      previousMovies.filter((movie) => movie.imdbID !== selectedId)
+    );
   };
-
+  useEffect(() => {
+    localStorage.setItem("watchedMovies", JSON.stringify([...watchedMovies]));
+  }, [watchedMovies]);
   return (
     <>
       <Navbar>
