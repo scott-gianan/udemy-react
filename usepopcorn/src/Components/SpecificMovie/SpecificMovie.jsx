@@ -31,7 +31,7 @@ function SpecificMovie({
     return () => {
       window.removeEventListener("keydown", handleEscapeKey);
     };
-  }, []);
+  }, [onCloseMovie]);
 
   return (
     <div className="details">
