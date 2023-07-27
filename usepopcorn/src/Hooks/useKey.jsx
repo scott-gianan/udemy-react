@@ -3,7 +3,7 @@ import { useEffect } from "react";
 export function useKey(key, callback) {
   useEffect(() => {
     const handleKeyPress = (e) => {
-      if (e.key === key) {
+      if (e.key.toLowerCase() === key.toLowerCase()) {
         callback();
       }
     };
