@@ -84,7 +84,7 @@ export default function App() {
   const handleCloseMovie = useCallback(() => {
     setSelectedMovie(null);
   }, []);
-  const handleAddMovie = () => {
+  const handleAddMovie = (countRate) => {
     setWatchedMovies((previousMovies) => {
       const addedMovie = {
         imdbID: selectedMovie.imdbID,
@@ -94,11 +94,11 @@ export default function App() {
         runtime: Number(selectedMovie.Runtime.match(/\d+/g).toString()),
         imdbRating: selectedMovie.imdbRating,
         userRating: userRating,
+        userDecisionCountRate: countRate,
       };
 
       return [...previousMovies, addedMovie];
     });
-    console.log(watchedMovies);
     setSelectedMovie(null);
   };
   const handleDeleteMovie = (selectedId) => {
