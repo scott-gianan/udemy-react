@@ -1,4 +1,7 @@
 import { useEffect, useRef } from "react";
+//custom hooks
+import { useKey } from "../../Hooks/useKey";
+//components
 import StarRating from "../../Components/StarRating/StarRating";
 function SpecificMovie({
   hasUserRating,
@@ -23,18 +26,10 @@ function SpecificMovie({
     };
   }, [movie]);
   //effect for unmounting this component when the user hits the ESC key
-  useEffect(() => {
-    const handleEscapeKey = (event) => {
-      const pressedKey = event.key;
-      if (pressedKey === "Escape") {
-        onCloseMovie();
-      }
-    };
-    window.addEventListener("keydown", handleEscapeKey);
-    return () => {
-      window.removeEventListener("keydown", handleEscapeKey);
-    };
-  }, [onCloseMovie]);
+  const onPressEscape = () => {
+    onCloseMovie();
+  };
+  useKey("Escape", onPressEscape);
   useEffect(() => {
     if (!hasUserRating) {
       return;
