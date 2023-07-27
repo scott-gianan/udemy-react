@@ -1,5 +1,7 @@
 //react hooks
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
+//custom hooks
+import { useLocalStorage } from "./Hooks/useLocalStorage";
 //Components
 import Box from "./Components/Box/Box";
 import Navbar from "./Components/Navigation/Navbar";
@@ -15,7 +17,6 @@ import SpecificMovie from "./Components/SpecificMovie/SpecificMovie";
 import "./App.css";
 //assets
 import { tempMovieData } from "./assets/tempMovieData";
-import { tempWatchedMovieData } from "./assets/tempWatchedMovieData";
 import Error from "./Components/Error/Error";
 //constant
 const KEY = "5abe5097";
@@ -24,9 +25,7 @@ const KEY = "5abe5097";
 import useHandleLoader from "./Hooks/useHandleLoader";
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
-  const [watchedMovies, setWatchedMovies] = useState(() => {
-    return JSON.parse(localStorage.getItem("watchedMovies")) ?? [];
-  });
+  const [watchedMovies, setWatchedMovies] = useLocalStorage();
   const [searchError, setSearchError, isSearchingMovies, setIsSearchingMovies] =
     useHandleLoader();
   const [
@@ -106,9 +105,7 @@ export default function App() {
       previousMovies.filter((movie) => movie.imdbID !== selectedId)
     );
   };
-  useEffect(() => {
-    localStorage.setItem("watchedMovies", JSON.stringify([...watchedMovies]));
-  }, [watchedMovies]);
+
   return (
     <>
       <Navbar>
