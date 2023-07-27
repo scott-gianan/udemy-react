@@ -26,10 +26,7 @@ function SpecificMovie({
     };
   }, [movie]);
   //effect for unmounting this component when the user hits the ESC key
-  const onPressEscape = () => {
-    onCloseMovie();
-  };
-  useKey("Escape", onPressEscape);
+  useKey("Escape", onCloseMovie);
   useEffect(() => {
     if (!hasUserRating) {
       return;
