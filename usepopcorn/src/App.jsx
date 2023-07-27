@@ -25,7 +25,10 @@ const KEY = "5abe5097";
 import useHandleLoader from "./Hooks/useHandleLoader";
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
-  const [watchedMovies, setWatchedMovies] = useLocalStorage();
+  const [watchedMovies, setWatchedMovies] = useLocalStorage(
+    "watchedMovies",
+    []
+  );
   const [searchError, setSearchError, isSearchingMovies, setIsSearchingMovies] =
     useHandleLoader();
   const [
