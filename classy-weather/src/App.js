@@ -1,6 +1,7 @@
 import React from "react";
 import Weather from "./Weather";
 import { convertToFlag } from "./starter";
+console.log(convertToFlag("PH"));
 class App extends React.Component {
   state = {
     location: "",
@@ -13,6 +14,11 @@ class App extends React.Component {
     this.setState({ location: e.target.value });
   };
   fetchWeather = async () => {
+    if (this.state.location.length < 3) {
+      this.setState({ weather: {} });
+      return;
+    }
+
     try {
       this.setState({ isLoading: true, error: "" });
       // 1) Getting location (geocoding)
@@ -20,7 +26,7 @@ class App extends React.Component {
         `https://geocoding-api.open-meteo.com/v1/search?name=${this.state.location}`
       );
       const geoData = await geoRes.json();
-      //console.log(geoData);
+      console.log(geoData);
 
       if (!geoData.results) throw new Error("Location not found");
 
@@ -34,7 +40,6 @@ class App extends React.Component {
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&timezone=${timezone}&daily=weathercode,temperature_2m_max,temperature_2m_min`
       );
       const weatherData = await weatherRes.json();
-      console.log(weatherData);
       this.setState({ weather: weatherData.daily });
     } catch (err) {
       this.setState({ error: err.message });
@@ -42,6 +47,19 @@ class App extends React.Component {
       this.setState({ isLoading: false });
     }
   };
+  //called immediately after rendering
+  // closest thing to functional components is useEffect with empty dependency array
+  componentDidMount() {
+    this.setState({ location: localStorage.getItem("location") ?? "" });
+  }
+  //useEffect with populated dependency array
+  componentDidUpdate(previousProps, previousState) {
+    if (this.state.location !== previousState.location) {
+      this.fetchWeather();
+      localStorage.setItem("location", this.state.location);
+    }
+  }
+
   render() {
     return (
       <div className="app">
@@ -50,7 +68,7 @@ class App extends React.Component {
           location={this.state.location}
           onChangeLocation={this.onChangeLocation}
         />
-        <button onClick={this.fetchWeather}>Get weather</button>
+        {/* <button onClick={this.fetchWeather}>Get weather</button> */}
         {this.state.error && <p className="loader">{this.state.error}</p>}
         {this.state.isLoading && <p className="loader">Loading...</p>}
         {this.state.weather.weathercode && (
