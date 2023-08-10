@@ -24,6 +24,8 @@ const reducer = (state, action) => {
       return { ...state, status: "active" };
     case "newAnswer":
       return { ...state, answer: action.payload };
+    case "nextQuestion":
+      return { ...state, answer: null, index: state.index++ };
     default:
       throw new Error("Unknown Action");
   }
@@ -34,6 +36,7 @@ function App() {
     initialState
   );
   useEffect(() => {
+    console.log("effect rendered");
     async function fetchQuestions() {
       try {
         const response = await fetch("http://localhost:8000/questions");
@@ -62,6 +65,7 @@ function App() {
             currentQuestion={questions[index]}
             dispatch={dispatch}
             answer={answer}
+            key={index}
           />
         )}
       </Main>

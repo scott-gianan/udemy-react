@@ -25,13 +25,14 @@ function Question({ dispatch, currentQuestion, answer }) {
         >
           Reveal Answer
         </button>
-        <button
-          className="btn"
-          onClick={handleRevealAnswer}
-          disabled={revealAnswer}
-        >
-          Next Question
-        </button>
+        {revealAnswer && (
+          <button
+            className="btn"
+            onClick={() => dispatch({ type: "nextQuestion" })}
+          >
+            Next Question
+          </button>
+        )}
       </div>
     </div>
   );
