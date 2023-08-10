@@ -1,12 +1,18 @@
 import { useState } from "react";
 import QuestionOptions from "./QuestionOptions";
 
-function Question({ dispatch, currentQuestion, answer }) {
+function Question({ dispatch, currentQuestion, answer, index }) {
   const [revealAnswer, setRevealAnswer] = useState(false);
   const { question, options, points, correctOption } = currentQuestion;
   const handleRevealAnswer = () => {
-    if (!answer) return;
+    if (answer === null) return;
     setRevealAnswer((v) => !v);
+  };
+  const handleNextQuestion = (i) => {
+    if (i === 14) {
+      dispatch({ type: "finished" });
+    }
+    dispatch({ type: "nextQuestion" });
   };
   return (
     <div>
@@ -27,10 +33,7 @@ function Question({ dispatch, currentQuestion, answer }) {
           Reveal Answer
         </button>
         {revealAnswer && (
-          <button
-            className="btn"
-            onClick={() => dispatch({ type: "nextQuestion" })}
-          >
+          <button className="btn" onClick={() => handleNextQuestion(index)}>
             Next Question
           </button>
         )}
