@@ -26,6 +26,11 @@ const reducer = (state, action) => {
       return { ...state, status: "error", message: action.payload };
     case "start":
       return { ...state, status: "active" };
+    case "tempAnswer":
+      return {
+        ...state,
+        answer: action.payload,
+      };
     case "newAnswer":
       const currentQuestion = state.questions[state.index];
       const { correctOption, points } = currentQuestion;

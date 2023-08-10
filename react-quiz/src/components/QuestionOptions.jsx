@@ -4,20 +4,22 @@ function QuestionOptions({
   correctOption,
   answer,
   isAnswerReveal,
+  onChosenAnswer,
 }) {
-  const hasAnswered = isAnswerReveal && answer !== null;
+  const hasFinalAnswer = isAnswerReveal && answer !== null;
+
   return (
     <div className="options">
       {options?.map((option, index) => {
         const userAnswer = index === answer && "answer";
         const isAnswerCorrect =
-          hasAnswered && (index === correctOption ? "correct" : "wrong");
+          hasFinalAnswer && (index === correctOption ? "correct" : "wrong");
         return (
           <button
             className={`btn btn-option ${userAnswer} ${isAnswerCorrect}`}
             key={option}
-            onClick={() => dispatch({ type: "newAnswer", payload: index })}
-            disabled={hasAnswered}
+            onClick={() => onChosenAnswer(index)}
+            disabled={hasFinalAnswer}
           >
             {option}
           </button>
@@ -28,3 +30,9 @@ function QuestionOptions({
 }
 
 export default QuestionOptions;
+// <button
+//   className={`btn btn-option ${userAnswer} ${isAnswerCorrect}`}
+//   key={option}
+//   onClick={() => dispatch({ type: "newAnswer", payload: index })}
+//   disabled={hasFinalAnswer}
+// ></button>
