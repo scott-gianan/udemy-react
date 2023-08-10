@@ -256,3 +256,8 @@ progress {
   font-size: inherit;
   padding: 0.8rem;
 }
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+}
