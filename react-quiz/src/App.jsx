@@ -1,3 +1,4 @@
+import { useEffect, useReducer } from "react";
 //components
 import Header from "./components/Header";
 import Main from "./components/Main";
@@ -5,8 +6,10 @@ import Loader from "./components/Loader";
 import Error from "./components/Error";
 import StartScreen from "./components/StartScreen";
 import Question from "./components/Question";
+import Progress from "./components/Progress";
+import FinishScreen from "./components/FinishScreen";
 import "./App.css";
-import { useEffect, useReducer } from "react";
+
 const initialState = {
   questions: [],
   //status: loading, error, ready, active, finished
@@ -34,8 +37,14 @@ const reducer = (state, action) => {
             ? state.points + points
             : state.points,
       };
+    case "finished":
+      return { ...state, status: "finished" };
     case "nextQuestion":
       return { ...state, answer: null, index: state.index++ };
+    case "restart":
+      return {
+        ...initialState,
+      };
     default:
       throw new Error("Unknown Action");
   }
@@ -43,6 +52,8 @@ const reducer = (state, action) => {
 function App() {
   const [{ questions, status, message, index, answer, points }, dispatch] =
     useReducer(reducer, initialState);
+  const numOfQuestions = questions.length;
+  const maxTotalPoints = questions.reduce((curr, acc) => curr + acc.points, 0);
   useEffect(() => {
     async function fetchQuestions() {
       try {
@@ -56,8 +67,10 @@ function App() {
         dispatch({ type: "dataFailed", payload: error.message });
       }
     }
-    fetchQuestions();
-  }, []);
+    if (!numOfQuestions) {
+      fetchQuestions();
+    }
+  }, [numOfQuestions]);
   return (
     <div className="app">
       <Header />
@@ -67,12 +80,28 @@ function App() {
         {status === "ready" && (
           <StartScreen quizItemsLength={questions.length} dispatch={dispatch} />
         )}
-        {status === "active" && (
-          <Question
-            currentQuestion={questions[index]}
+        {status === "active" /*&& index <= 14*/ && (
+          <>
+            <Progress
+              currentPoints={points}
+              index={index}
+              numOfQuestions={questions.length}
+              maxTotalPoints={maxTotalPoints}
+            />
+            <Question
+              currentQuestion={questions[index]}
+              dispatch={dispatch}
+              answer={answer}
+              key={index}
+              index={index}
+            />
+          </>
+        )}
+        {status === "finished" && (
+          <FinishScreen
+            score={points}
             dispatch={dispatch}
-            answer={answer}
-            key={index}
+            maxTotalPoints={maxTotalPoints}
           />
         )}
       </Main>
