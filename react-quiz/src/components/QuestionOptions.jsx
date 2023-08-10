@@ -1,15 +1,21 @@
-function QuestionOptions({ options, dispatch, correctOption, answer }) {
-  const hasAnswered = answer ?? false;
-
+function QuestionOptions({
+  options,
+  dispatch,
+  correctOption,
+  answer,
+  isAnswerReveal,
+}) {
+  const hasAnswered = isAnswerReveal && answer !== null;
+  console.log(hasAnswered);
   return (
     <div className="options">
       {options?.map((option, index) => {
+        const userAnswer = index === answer && "answer";
+        const isAnswerCorrect =
+          hasAnswered && (index === correctOption ? "correct" : "wrong");
         return (
           <button
-            className={`btn btn-option ${index === answer ? "answer" : ""} 
-            ${
-              hasAnswered ? (index === correctOption ? "correct" : "wrong") : ""
-            }`}
+            className={`btn btn-option ${userAnswer} ${isAnswerCorrect}`}
             key={option}
             onClick={() => dispatch({ type: "newAnswer", payload: index })}
             disabled={hasAnswered}
