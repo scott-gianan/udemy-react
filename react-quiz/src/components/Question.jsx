@@ -5,6 +5,7 @@ function Question({ dispatch, currentQuestion, answer }) {
   const [revealAnswer, setRevealAnswer] = useState(false);
   const { question, options, points, correctOption } = currentQuestion;
   const handleRevealAnswer = () => {
+    if (!answer) return;
     setRevealAnswer((v) => !v);
   };
   return (
