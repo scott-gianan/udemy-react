@@ -6,7 +6,6 @@ function QuestionOptions({
   isAnswerReveal,
 }) {
   const hasAnswered = isAnswerReveal && answer !== null;
-  console.log(hasAnswered);
   return (
     <div className="options">
       {options?.map((option, index) => {

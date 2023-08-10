@@ -13,6 +13,7 @@ const initialState = {
   status: "loading",
   index: 0,
   answer: null,
+  points: 0,
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -23,7 +24,16 @@ const reducer = (state, action) => {
     case "start":
       return { ...state, status: "active" };
     case "newAnswer":
-      return { ...state, answer: action.payload };
+      const currentQuestion = state.questions[state.index];
+      const { correctOption, points } = currentQuestion;
+      return {
+        ...state,
+        answer: action.payload,
+        points:
+          action.payload === correctOption
+            ? state.points + points
+            : state.points,
+      };
     case "nextQuestion":
       return { ...state, answer: null, index: state.index++ };
     default:
@@ -31,12 +41,9 @@ const reducer = (state, action) => {
   }
 };
 function App() {
-  const [{ questions, status, message, index, answer }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [{ questions, status, message, index, answer, points }, dispatch] =
+    useReducer(reducer, initialState);
   useEffect(() => {
-    console.log("effect rendered");
     async function fetchQuestions() {
       try {
         const response = await fetch("http://localhost:8000/questions");
