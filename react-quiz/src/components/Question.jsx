@@ -1,7 +1,14 @@
 import { useState } from "react";
 import QuestionOptions from "./QuestionOptions";
+import Timer from "./Timer";
 
-function Question({ dispatch, currentQuestion, answer, index }) {
+function Question({
+  dispatch,
+  currentQuestion,
+  answer,
+  index,
+  secondsRemaining,
+}) {
   const [revealAnswer, setRevealAnswer] = useState(false);
   const [chosenAnswer, setChosenAnswer] = useState(null);
   const { question, options, points, correctOption } = currentQuestion;
@@ -33,16 +40,22 @@ function Question({ dispatch, currentQuestion, answer, index }) {
         onChosenAnswer={handleChosenAnswer}
       />
       <div className="btn-container">
-        <button
-          className="btn"
-          onClick={handleRevealAnswer}
-          disabled={revealAnswer}
-        >
-          Reveal Answer
-        </button>
-        {revealAnswer && (
-          <button className="btn" onClick={() => handleNextQuestion(index)}>
+        <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
+
+        {revealAnswer ? (
+          <button
+            className="btn btn-next"
+            onClick={() => handleNextQuestion(index)}
+          >
             Next Question
+          </button>
+        ) : (
+          <button
+            className="btn btn-reveal"
+            onClick={handleRevealAnswer}
+            disabled={revealAnswer}
+          >
+            Reveal Answer
           </button>
         )}
       </div>
