@@ -112,7 +112,6 @@ function App() {
         )}
         {status === "active" /*&& index <= 14*/ && (
           <>
-            <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
             <Progress
               currentPoints={points}
               index={index}
@@ -125,6 +124,7 @@ function App() {
               answer={answer}
               key={index}
               index={index}
+              secondsRemaining={secondsRemaining}
             />
           </>
         )}
