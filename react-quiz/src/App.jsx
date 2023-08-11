@@ -8,6 +8,7 @@ import StartScreen from "./components/StartScreen";
 import Question from "./components/Question";
 import Progress from "./components/Progress";
 import FinishScreen from "./components/FinishScreen";
+const SECONDS_PER_QUESTION = 20;
 import "./App.css";
 
 const initialState = {
@@ -18,7 +19,7 @@ const initialState = {
   answer: null,
   points: 0,
   highScore: 0,
-  secondsRemaining: 450,
+  secondsRemaining: 0,
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -27,7 +28,11 @@ const reducer = (state, action) => {
     case "dataFailed":
       return { ...state, status: "error", message: action.payload };
     case "start":
-      return { ...state, status: "active" };
+      return {
+        ...state,
+        status: "active",
+        secondsRemaining: SECONDS_PER_QUESTION * state.questions.length,
+      };
     case "tempAnswer":
       return {
         ...state,
