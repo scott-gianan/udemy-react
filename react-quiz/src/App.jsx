@@ -57,6 +57,7 @@ const reducer = (state, action) => {
     case "restart":
       return {
         ...initialState,
+        secondsRemaining: 450,
         highScore: state.highScore,
       };
     case "countDown":
