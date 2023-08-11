@@ -55,6 +55,7 @@ const reducer = (state, action) => {
     case "restart":
       return {
         ...initialState,
+        highScore: state.highScore,
       };
     default:
       throw new Error("Unknown Action");
