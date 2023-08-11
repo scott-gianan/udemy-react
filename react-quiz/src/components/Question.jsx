@@ -1,13 +1,7 @@
 import { useState } from "react";
 import QuestionOptions from "./QuestionOptions";
-import Timer from "./Timer";
-function Question({
-  dispatch,
-  currentQuestion,
-  answer,
-  index,
-  secondsRemaining,
-}) {
+
+function Question({ dispatch, currentQuestion, answer, index }) {
   const [revealAnswer, setRevealAnswer] = useState(false);
   const [chosenAnswer, setChosenAnswer] = useState(null);
   const { question, options, points, correctOption } = currentQuestion;
@@ -24,6 +18,7 @@ function Question({
     if (i === 14) {
       dispatch({ type: "finished" });
     }
+    setRevealAnswer((v) => !v);
     dispatch({ type: "nextQuestion" });
   };
   return (
@@ -38,18 +33,13 @@ function Question({
         onChosenAnswer={handleChosenAnswer}
       />
       <div className="btn-container">
-        <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
-        {chosenAnswer !== null && !revealAnswer ? (
-          <button
-            className="btn"
-            onClick={handleRevealAnswer}
-            disabled={revealAnswer}
-          >
-            Reveal Answer
-          </button>
-        ) : (
-          ""
-        )}
+        <button
+          className="btn"
+          onClick={handleRevealAnswer}
+          disabled={revealAnswer}
+        >
+          Reveal Answer
+        </button>
         {revealAnswer && (
           <button className="btn" onClick={() => handleNextQuestion(index)}>
             Next Question
@@ -61,22 +51,3 @@ function Question({
 }
 
 export default Question;
-// <div className="btn-container">
-//   <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
-//   {chosenAnswer !== null && revealAnswer !== null ? (
-//     <button
-//       className="btn"
-//       onClick={handleRevealAnswer}
-//       disabled={revealAnswer}
-//     >
-//       Reveal Answer
-//     </button>
-//   ) : (
-//     ""
-//   )}
-//   {revealAnswer && (
-//     <button className="btn" onClick={() => handleNextQuestion(index)}>
-//       Next Question
-//     </button>
-//   )}
-// </div>
