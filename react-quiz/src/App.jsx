@@ -17,6 +17,7 @@ const initialState = {
   index: 0,
   answer: null,
   points: 0,
+  highScore: 0,
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -43,7 +44,12 @@ const reducer = (state, action) => {
             : state.points,
       };
     case "finished":
-      return { ...state, status: "finished" };
+      return {
+        ...state,
+        status: "finished",
+        highScore:
+          state.points > state.highScore ? state.points : state.highScore,
+      };
     case "nextQuestion":
       return { ...state, answer: null, index: state.index++ };
     case "restart":
@@ -55,10 +61,13 @@ const reducer = (state, action) => {
   }
 };
 function App() {
-  const [{ questions, status, message, index, answer, points }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    { questions, status, message, index, answer, points, highScore },
+    dispatch,
+  ] = useReducer(reducer, initialState);
   const numOfQuestions = questions.length;
   const maxTotalPoints = questions.reduce((curr, acc) => curr + acc.points, 0);
+
   useEffect(() => {
     async function fetchQuestions() {
       try {
@@ -76,6 +85,7 @@ function App() {
       fetchQuestions();
     }
   }, [numOfQuestions]);
+
   return (
     <div className="app">
       <Header />
@@ -107,6 +117,7 @@ function App() {
             score={points}
             dispatch={dispatch}
             maxTotalPoints={maxTotalPoints}
+            highScore={highScore}
           />
         )}
       </Main>
