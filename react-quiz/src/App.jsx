@@ -8,6 +8,7 @@ import StartScreen from "./components/StartScreen";
 import Question from "./components/Question";
 import Progress from "./components/Progress";
 import FinishScreen from "./components/FinishScreen";
+import Timer from "./components/Timer";
 import "./App.css";
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   answer: null,
   points: 0,
   highScore: 0,
+  secondsRemaining: 450,
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -57,13 +59,24 @@ const reducer = (state, action) => {
         ...initialState,
         highScore: state.highScore,
       };
+    case "countDown":
+      return { ...state, secondsRemaining: action.payload };
     default:
       throw new Error("Unknown Action");
   }
 };
 function App() {
   const [
-    { questions, status, message, index, answer, points, highScore },
+    {
+      questions,
+      status,
+      message,
+      index,
+      answer,
+      points,
+      highScore,
+      secondsRemaining,
+    },
     dispatch,
   ] = useReducer(reducer, initialState);
   const numOfQuestions = questions.length;
@@ -98,6 +111,7 @@ function App() {
         )}
         {status === "active" /*&& index <= 14*/ && (
           <>
+            <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
             <Progress
               currentPoints={points}
               index={index}
