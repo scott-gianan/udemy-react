@@ -8,7 +8,6 @@ import StartScreen from "./components/StartScreen";
 import Question from "./components/Question";
 import Progress from "./components/Progress";
 import FinishScreen from "./components/FinishScreen";
-import Timer from "./components/Timer";
 import "./App.css";
 
 const initialState = {
@@ -122,7 +121,6 @@ function App() {
               currentQuestion={questions[index]}
               dispatch={dispatch}
               answer={answer}
-              key={index}
               index={index}
               secondsRemaining={secondsRemaining}
             />
