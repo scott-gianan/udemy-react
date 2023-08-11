@@ -5,9 +5,12 @@ function Timer({ dispatch, secondsRemaining }) {
   const seconds = secondsRemaining % 60;
   useEffect(() => {
     if (secondsRemaining === 0) dispatch({ type: "finished" });
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       dispatch({ type: "countDown", payload: secondsRemaining - 1 });
     }, 1000);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [dispatch, secondsRemaining]);
   return (
     <div className="btn btn-ui">{`${minutes} : ${
