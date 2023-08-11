@@ -142,7 +142,10 @@ progress {
 .btn-ui {
   float: right;
 }
-
+.btn-reveal {
+  background-color: rgb(184, 233, 110);
+  color: black;
+}
 .options {
   display: flex;
   flex-direction: column;
