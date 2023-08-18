@@ -1,19 +1,15 @@
 import styles from "./styles/CityList.module.scss";
 import Spinner from "./Spinner";
-import City from "./City";
+import CityItem from "./CityItem";
 function CityList({ cities, isLoading }) {
   if (isLoading) {
     return <Spinner />;
   }
-
+  console.log(cities);
   return (
     <ul className={styles.cityList}>
       {cities.map((city) => {
-        return (
-          <li key={city.id}>
-            <City currentCity={city} />
-          </li>
-        );
+        return <CityItem city={city} key={city.id} />;
       })}
     </ul>
   );
