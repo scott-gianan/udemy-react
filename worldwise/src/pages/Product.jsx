@@ -1,11 +1,12 @@
-import styles from "./Product.module.css";
-
+import styles from "./styles/Product.module.scss";
+import PageNav from "../components/PageNav";
 export default function Product() {
   return (
     <main className={styles.product}>
+      <PageNav />
       <section>
         <img
-          src="img-1.jpg"
+          src="../../public/images/img-1.jpg"
           alt="person with dog overlooking mountain with sunset"
         />
         <div>
