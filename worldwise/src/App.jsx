@@ -6,6 +6,7 @@ import Product from "./pages/Product";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
 import CityList from "./components/CityList";
+import CountryList from "./components/CountryList";
 //custom hooks
 import useFetchCities from "./hooks/useFetchCities";
 function App() {
@@ -40,7 +41,10 @@ function App() {
               path="cities"
               element={<CityList cities={cities} isLoading={isLoading} />}
             />
-            <Route path="countries" element={<p>List of Countries</p>} />
+            <Route
+              path="countries"
+              element={<CountryList countries={countries} />}
+            />
             <Route path="form" element={<p>Form</p>} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
