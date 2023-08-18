@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+//components
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Pricing from "./pages/Pricing";
@@ -7,8 +8,10 @@ import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
 import CityList from "./components/CityList";
 import CountryList from "./components/CountryList";
+import City from "./components/City";
 //custom hooks
 import useFetchCities from "./hooks/useFetchCities";
+
 function App() {
   const [cities, isLoading] = useFetchCities();
 
@@ -29,6 +32,7 @@ function App() {
               path="cities"
               element={<CityList cities={cities} isLoading={isLoading} />}
             />
+            <Route path="cities/:id" element={<City cities={cities} />} />
             <Route path="countries" element={<CountryList cities={cities} />} />
             <Route path="form" element={<p>Form</p>} />
           </Route>

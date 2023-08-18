@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import styles from "./styles/City.module.scss";
 
 const formatDate = (date) =>
@@ -8,17 +9,12 @@ const formatDate = (date) =>
     weekday: "long",
   }).format(new Date(date));
 
-function City({ currentCity }) {
-  // TEMP DATA
-  // const currentCity = {
-  //   cityName: "Lisbon",
-  //   emoji: "🇵🇹",
-  //   date: "2027-10-31T15:59:59.138Z",
-  //   notes: "My favorite city so far!",
-  // };
-
+function City({ cities }) {
+  const { id } = useParams();
+  const paramsId = Number(id);
+  const currentCity = cities.find((c) => c.id === paramsId);
+  console.log(currentCity);
   const { cityName, emoji, date, notes } = currentCity;
-
   return (
     <div className={styles.city}>
       <div className={styles.row}>
@@ -57,3 +53,10 @@ function City({ currentCity }) {
 }
 
 export default City;
+// TEMP DATA
+// const currentCity = {
+//   cityName: "Lisbon",
+//   emoji: "🇵🇹",
+//   date: "2027-10-31T15:59:59.138Z",
+//   notes: "My favorite city so far!",
+// };
