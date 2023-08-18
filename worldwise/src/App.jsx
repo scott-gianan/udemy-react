@@ -11,18 +11,6 @@ import CountryList from "./components/CountryList";
 import useFetchCities from "./hooks/useFetchCities";
 function App() {
   const [cities, isLoading] = useFetchCities();
-  const countries = cities.reduce((acc, currCity) => {
-    const { country, emoji } = currCity;
-    const nextCountry = {
-      country,
-      emoji,
-    };
-    const found = acc.find((c) => c.country === nextCountry.country);
-    if (!found) {
-      acc.push(nextCountry);
-    }
-    return acc;
-  }, []);
 
   return (
     <>
@@ -41,10 +29,7 @@ function App() {
               path="cities"
               element={<CityList cities={cities} isLoading={isLoading} />}
             />
-            <Route
-              path="countries"
-              element={<CountryList countries={countries} />}
-            />
+            <Route path="countries" element={<CountryList cities={cities} />} />
             <Route path="form" element={<p>Form</p>} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
