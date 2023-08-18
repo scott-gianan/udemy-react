@@ -6,8 +6,10 @@ import Product from "./pages/Product";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
 import CityList from "./components/CityList";
-
+//custom hooks
+import useFetchCities from "./hooks/useFetchCities";
 function App() {
+  const [cities, isLoading] = useFetchCities();
   return (
     <>
       <BrowserRouter>
