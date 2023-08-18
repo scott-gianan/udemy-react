@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 const BASE_URL = `http://localhost:8000`;
 function useFetchCities() {
-  const [cities, setCities] = useState({});
+  const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -12,6 +12,7 @@ function useFetchCities() {
         const data = await response.json();
         setCities(data);
       } catch (error) {
+        console.log(error);
         console.log(error.message);
         alert(error.message);
       } finally {

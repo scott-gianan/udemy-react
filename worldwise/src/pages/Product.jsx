@@ -1,12 +1,13 @@
 import styles from "./styles/Product.module.scss";
 import PageNav from "../components/PageNav";
+import productPic from "../assets/images/img-1.jpg";
 export default function Product() {
   return (
     <main className={styles.product}>
       <PageNav />
       <section>
         <img
-          src="../../public/images/img-1.jpg"
+          src={productPic}
           alt="person with dog overlooking mountain with sunset"
         />
         <div>

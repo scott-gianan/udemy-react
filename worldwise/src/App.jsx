@@ -10,6 +10,7 @@ import CityList from "./components/CityList";
 import useFetchCities from "./hooks/useFetchCities";
 function App() {
   const [cities, isLoading] = useFetchCities();
+
   return (
     <>
       <BrowserRouter>
@@ -19,8 +20,14 @@ function App() {
           <Route path="/product" element={<Product />} />
           <Route path="/login" element={<Login />} />
           <Route path="/app" element={<AppLayout />}>
-            <Route index element={<CityList />} />
-            <Route path="cities" element={<p>List of Cities</p>} />
+            <Route
+              index
+              element={<CityList cities={cities} isLoading={isLoading} />}
+            />
+            <Route
+              path="cities"
+              element={<CityList cities={cities} isLoading={isLoading} />}
+            />
             <Route path="countries" element={<p>List of Countries</p>} />
             <Route path="form" element={<p>Form</p>} />
           </Route>

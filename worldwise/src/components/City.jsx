@@ -8,14 +8,14 @@ const formatDate = (date) =>
     weekday: "long",
   }).format(new Date(date));
 
-function City() {
+function City({ currentCity }) {
   // TEMP DATA
-  const currentCity = {
-    cityName: "Lisbon",
-    emoji: "🇵🇹",
-    date: "2027-10-31T15:59:59.138Z",
-    notes: "My favorite city so far!",
-  };
+  // const currentCity = {
+  //   cityName: "Lisbon",
+  //   emoji: "🇵🇹",
+  //   date: "2027-10-31T15:59:59.138Z",
+  //   notes: "My favorite city so far!",
+  // };
 
   const { cityName, emoji, date, notes } = currentCity;
 
@@ -51,9 +51,7 @@ function City() {
         </a>
       </div>
 
-      <div>
-        <ButtonBack />
-      </div>
+      <div>{/* <ButtonBack /> */} ButtonBack</div>
     </div>
   );
 }
