@@ -10,6 +10,18 @@ import CityList from "./components/CityList";
 import useFetchCities from "./hooks/useFetchCities";
 function App() {
   const [cities, isLoading] = useFetchCities();
+  const countries = cities.reduce((acc, currCity) => {
+    const { country, emoji } = currCity;
+    const nextCountry = {
+      country,
+      emoji,
+    };
+    const found = acc.find((c) => c.country === nextCountry.country);
+    if (!found) {
+      acc.push(nextCountry);
+    }
+    return acc;
+  }, []);
 
   return (
     <>
