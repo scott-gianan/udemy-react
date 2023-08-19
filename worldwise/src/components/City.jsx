@@ -13,7 +13,6 @@ function City({ cities }) {
   const { id } = useParams();
   const paramsId = Number(id);
   const currentCity = cities.find((c) => c.id === paramsId);
-  console.log(currentCity);
   const { cityName, emoji, date, notes } = currentCity;
   return (
     <div className={styles.city}>
