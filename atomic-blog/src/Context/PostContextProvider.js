@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { faker } from "@faker-js/faker";
 const PostContext = React.createContext();
 const QueryContext = React.createContext();
+//exported this fn for to be used by Archive component
 export function createRandomPost() {
   return {
     title: `${faker.hacker.adjective()} ${faker.hacker.noun()}`,
@@ -23,6 +24,7 @@ function PostContextProvider({ children }) {
     searchQuery,
     setSearchQuery,
   };
+
   return (
     <QueryContext.Provider value={queryValue}>
       <PostContext.Provider value={postValue}>{children}</PostContext.Provider>
@@ -35,10 +37,10 @@ export function usePostContext() {
   function handleAddPost(post) {
     setPosts((posts) => [post, ...posts]);
   }
-
   function handleClearPosts() {
     setPosts([]);
   }
+
   return {
     posts,
     handleAddPost,
@@ -50,6 +52,7 @@ export function useSearchQueryContext() {
   const handleSearchQuery = (e) => {
     setSearchQuery(e.target.value);
   };
+
   return {
     searchQuery,
     handleSearchQuery,
