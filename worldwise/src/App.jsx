@@ -11,32 +11,29 @@ import CountryList from "./components/CountryList";
 import City from "./components/City";
 import Form from "./components/Form";
 //custom hooks
-import useFetchCities from "./hooks/useFetchCities";
+import CitiesContextProvider from "./context/CitiesContextProvider";
 
 function App() {
-  const [cities, isLoading] = useFetchCities();
-
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route index path="/" element={<Homepage />} />
-          <Route path="pricing" element={<Pricing />} />
-          <Route path="product" element={<Product />} />
-          <Route path="login" element={<Login />} />
-          <Route path="app" element={<AppLayout />}>
-            <Route index element={<Navigate replace to="cities" />} />
-            <Route
-              path="cities"
-              element={<CityList cities={cities} isLoading={isLoading} />}
-            />
-            <Route path="cities/:id" element={<City cities={cities} />} />
-            <Route path="countries" element={<CountryList cities={cities} />} />
-            <Route path="form" element={<Form />} />
-          </Route>
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <CitiesContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route index path="/" element={<Homepage />} />
+            <Route path="pricing" element={<Pricing />} />
+            <Route path="product" element={<Product />} />
+            <Route path="login" element={<Login />} />
+            <Route path="app" element={<AppLayout />}>
+              <Route index element={<Navigate replace to="cities" />} />
+              <Route path="cities" element={<CityList />} />
+              <Route path="cities/:id" element={<City />} />
+              <Route path="countries" element={<CountryList />} />
+              <Route path="form" element={<Form />} />
+            </Route>
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </CitiesContextProvider>
     </>
   );
 }

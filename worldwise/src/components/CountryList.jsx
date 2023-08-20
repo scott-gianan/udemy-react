@@ -1,6 +1,8 @@
 import styles from "./styles/CountryList.module.scss";
 import CountryItem from "./CountryItem";
-function CountryList({ cities }) {
+import { useCitiesContext } from "../context/CitiesContextProvider";
+function CountryList() {
+  const { cities } = useCitiesContext();
   const countries = cities.reduce((acc, currCity) => {
     const { country, emoji, id } = currCity;
     const nextCountry = {

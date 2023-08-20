@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import styles from "./styles/City.module.scss";
-
+import { useCitiesContext } from "../context/CitiesContextProvider";
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
     day: "numeric",
@@ -9,7 +9,8 @@ const formatDate = (date) =>
     weekday: "long",
   }).format(new Date(date));
 
-function City({ cities }) {
+function City() {
+  const { cities } = useCitiesContext();
   const { id } = useParams();
   const paramsId = Number(id);
   const currentCity = cities.find((c) => c.id === paramsId);
