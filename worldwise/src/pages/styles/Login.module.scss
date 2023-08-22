@@ -24,3 +24,14 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.login-btn {
+  background-color: var(--color-brand--2);
+  color: black;
+  padding: 0.8rem 2rem;
+  border-radius: 7px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
