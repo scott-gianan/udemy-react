@@ -10,15 +10,12 @@ const formatDate = (date) =>
 
 function CityItem({ city }) {
   const { cityName, emoji, date, id, position } = city;
-  const { setCities, currentCity } = useCitiesContext();
+  const { currentCity, deleteCity } = useCitiesContext();
   const isCurrentCityActive = id === currentCity.id;
 
   const handleDelete = (e) => {
     e.preventDefault();
-    console.log(city);
-    setCities((previousCities) => {
-      return previousCities.filter((c) => c.id !== city.id);
-    });
+    deleteCity(city);
   };
   return (
     <li>
