@@ -3,11 +3,11 @@ import { useQuestionsContext } from "../context/QuestionContextProvider";
 import RestartQuizBtn from "./RestartQuizBtn";
 
 function FinishScreen() {
-  const { questions, score, dispatch, highScore } = useQuestionsContext();
+  const { questions, points, dispatch, highScore } = useQuestionsContext();
   const maxTotalPoints = useMemo(() => {
     return questions.reduce((curr, acc) => curr + acc.points, 0);
   }, [questions]);
-  const percentage = (score / maxTotalPoints) * 100;
+  const percentage = (points / maxTotalPoints) * 100;
   let emoji;
   if (percentage === 100) emoji = "🥇";
   if (percentage >= 90 && percentage < 100) emoji = "🥇";
@@ -19,7 +19,7 @@ function FinishScreen() {
   return (
     <>
       <p className="result">
-        {emoji} You scored <strong>{score}</strong> out of {maxTotalPoints}{" "}
+        {emoji} You scored <strong>{points}</strong> out of {maxTotalPoints}{" "}
         points ({Math.ceil(percentage)}%)
       </p>
       <p className="highscore">(Highscore : {highScore} points)</p>

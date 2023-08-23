@@ -16,7 +16,7 @@ function App() {
   useEffect(() => {
     async function fetchQuestions() {
       try {
-        const response = await fetch("http://localhost:8000/questions");
+        const response = await fetch(`${import.meta.env.VITE_SOME_KEY}`);
         const data = await response.json();
         if (!data) {
           throw new Error("Error fetching data");
