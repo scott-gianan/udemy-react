@@ -1,6 +1,12 @@
+import { useMemo } from "react";
+import { useQuestionsContext } from "../context/QuestionContextProvider";
 import RestartQuizBtn from "./RestartQuizBtn";
 
-function FinishScreen({ score, dispatch, maxTotalPoints, highScore }) {
+function FinishScreen() {
+  const { questions, score, dispatch, highScore } = useQuestionsContext();
+  const maxTotalPoints = useMemo(() => {
+    return questions.reduce((curr, acc) => curr + acc.points, 0);
+  }, [questions]);
   const percentage = (score / maxTotalPoints) * 100;
   let emoji;
   if (percentage === 100) emoji = "🥇";

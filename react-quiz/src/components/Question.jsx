@@ -1,17 +1,13 @@
 import { useState } from "react";
 import QuestionOptions from "./QuestionOptions";
 import Timer from "./Timer";
+import { useQuestionsContext } from "../context/QuestionContextProvider";
 
-function Question({
-  dispatch,
-  currentQuestion,
-  answer,
-  index,
-  secondsRemaining,
-}) {
+function Question() {
   const [revealAnswer, setRevealAnswer] = useState(false);
   const [chosenAnswer, setChosenAnswer] = useState(null);
-  const { question, options, points, correctOption } = currentQuestion;
+  const { questions, dispatch, index, answer } = useQuestionsContext();
+  const { question, options, correctOption } = questions[index];
   const handleChosenAnswer = (index) => {
     setChosenAnswer(() => index);
     dispatch({ type: "tempAnswer", payload: index });
@@ -24,6 +20,7 @@ function Question({
   const handleNextQuestion = (i) => {
     if (i === 14) {
       dispatch({ type: "finished" });
+      return;
     }
     setRevealAnswer((v) => !v);
     dispatch({ type: "nextQuestion" });
@@ -33,14 +30,13 @@ function Question({
       <h4>{question}</h4>
       <QuestionOptions
         options={options}
-        dispatch={dispatch}
         correctOption={correctOption}
         answer={answer}
         isAnswerReveal={revealAnswer}
         onChosenAnswer={handleChosenAnswer}
       />
       <div className="btn-container">
-        <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
+        <Timer />
 
         {revealAnswer ? (
           <button

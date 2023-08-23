@@ -1,6 +1,5 @@
 function QuestionOptions({
   options,
-  dispatch,
   correctOption,
   answer,
   isAnswerReveal,
@@ -30,9 +29,3 @@ function QuestionOptions({
 }
 
 export default QuestionOptions;
-// <button
-//   className={`btn btn-option ${userAnswer} ${isAnswerCorrect}`}
-//   key={option}
-//   onClick={() => dispatch({ type: "newAnswer", payload: index })}
-//   disabled={hasFinalAnswer}
-// ></button>
