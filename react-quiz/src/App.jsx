@@ -13,7 +13,6 @@ import "./App.css";
 
 function App() {
   const { status, questions, dispatch } = useQuestionsContext();
-
   useEffect(() => {
     async function fetchQuestions() {
       try {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import QuestionOptions from "./QuestionOptions";
 import Timer from "./Timer";
 import { useQuestionsContext } from "../context/QuestionContextProvider";
