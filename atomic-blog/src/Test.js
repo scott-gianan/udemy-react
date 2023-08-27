@@ -1,8 +1,14 @@
-import { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 function SlowComponent() {
   // If this is too slow on your maching, reduce the `length`
-  const words = Array.from({ length: 100_000 }, () => "WORD");
+  // const words = useMemo(() => {
+  //   return Array.from({ length: 100_000 }, () => "WORD");
+  // }, []);
+  const words = Array.from({ length: 1000 }, () => {
+    console.log("word created");
+    return "WORD";
+  });
   return (
     <ul>
       {words.map((word, i) => (
@@ -13,14 +19,23 @@ function SlowComponent() {
     </ul>
   );
 }
-
-export default function Test() {
+function Counter({ children }) {
   const [count, setCount] = useState(0);
+
   return (
     <div>
       <h1>Slow counter?!?</h1>
       <button onClick={() => setCount((c) => c + 1)}>Increase: {count}</button>
-      <SlowComponent />
+      {children}
     </div>
+  );
+}
+export default function Test() {
+  return (
+    <>
+      <Counter>
+        <SlowComponent />
+      </Counter>
+    </>
   );
 }

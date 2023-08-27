@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useState, useContext } from "react";
 import { faker } from "@faker-js/faker";
 const PostContext = React.createContext();
@@ -16,14 +16,18 @@ function PostContextProvider({ children }) {
     Array.from({ length: 30 }, () => createRandomPost())
   );
   const [searchQuery, setSearchQuery] = useState("");
-  const postValue = {
-    posts,
-    setPosts,
-  };
-  const queryValue = {
-    searchQuery,
-    setSearchQuery,
-  };
+  const postValue = useMemo(() => {
+    return {
+      posts,
+      setPosts,
+    };
+  }, [posts]);
+  const queryValue = useMemo(() => {
+    return {
+      searchQuery,
+      setSearchQuery,
+    };
+  }, [searchQuery]);
 
   return (
     <QueryContext.Provider value={queryValue}>
