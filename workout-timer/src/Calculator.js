@@ -1,28 +1,44 @@
-import { useState } from 'react';
-import clickSound from './ClickSound.m4a';
+import React, { useCallback, useEffect, useState } from "react";
+import clickSound from "./ClickSound.m4a";
 
 function Calculator({ workouts, allowSound }) {
   const [number, setNumber] = useState(workouts.at(0).numExercises);
   const [sets, setSets] = useState(3);
   const [speed, setSpeed] = useState(90);
   const [durationBreak, setDurationBreak] = useState(5);
-
-  const duration = (number * sets * speed) / 60 + (sets - 1) * durationBreak;
+  const [duration, setDuration] = useState(0);
+  //const duration = ;
   const mins = Math.floor(duration);
   const seconds = (duration - mins) * 60;
 
-  const playSound = function () {
+  const playSound = useCallback(() => {
     if (!allowSound) return;
     const sound = new Audio(clickSound);
     sound.play();
-  };
+  }, [allowSound]);
 
+  function handleInc() {
+    setDuration((duration) => Math.ceil(duration) + 1);
+  }
+  function handleDec() {
+    setDuration((duration) => (duration > 1 ? Math.floor(duration) - 1 : 0));
+  }
+  useEffect(() => {
+    setDuration((number * sets * speed) / 60 + (sets - 1) * durationBreak);
+  }, [number, sets, speed, durationBreak]);
+  useEffect(() => {
+    playSound();
+  }, [duration, playSound]);
   return (
     <>
       <form>
         <div>
-          <label>Type of workout</label>
-          <select value={number} onChange={(e) => setNumber(+e.target.value)}>
+          <label htmlFor="type">Type of workout</label>
+          <select
+            id="type"
+            value={number}
+            onChange={(e) => setNumber(+e.target.value)}
+          >
             {workouts.map((workout) => (
               <option value={workout.numExercises} key={workout.name}>
                 {workout.name} ({workout.numExercises} exercises)
@@ -33,9 +49,9 @@ function Calculator({ workouts, allowSound }) {
         <div>
           <label>How many sets?</label>
           <input
-            type='range'
-            min='1'
-            max='5'
+            type="range"
+            min="1"
+            max="5"
             value={sets}
             onChange={(e) => setSets(e.target.value)}
           />
@@ -44,10 +60,10 @@ function Calculator({ workouts, allowSound }) {
         <div>
           <label>How fast are you?</label>
           <input
-            type='range'
-            min='30'
-            max='180'
-            step='30'
+            type="range"
+            min="30"
+            max="180"
+            step="30"
             value={speed}
             onChange={(e) => setSpeed(e.target.value)}
           />
@@ -56,9 +72,9 @@ function Calculator({ workouts, allowSound }) {
         <div>
           <label>Break length</label>
           <input
-            type='range'
-            min='1'
-            max='10'
+            type="range"
+            min="1"
+            max="10"
             value={durationBreak}
             onChange={(e) => setDurationBreak(e.target.value)}
           />
@@ -66,16 +82,16 @@ function Calculator({ workouts, allowSound }) {
         </div>
       </form>
       <section>
-        <button onClick={() => {}}>–</button>
+        <button onClick={handleDec}>–</button>
         <p>
-          {mins < 10 && '0'}
-          {mins}:{seconds < 10 && '0'}
+          {mins < 10 && "0"}
+          {mins}:{seconds < 10 && "0"}
           {seconds}
         </p>
-        <button onClick={() => {}}>+</button>
+        <button onClick={handleInc}>+</button>
       </section>
     </>
   );
 }
 
-export default Calculator;
+export default React.memo(Calculator);
