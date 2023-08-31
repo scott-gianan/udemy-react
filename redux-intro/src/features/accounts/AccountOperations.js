@@ -1,5 +1,7 @@
 import { useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { deposit, withdraw, requestLoan, payLoan } from "./accountSlice";
+import { formatCurrency } from "../../utils";
 function AccountOperations() {
   const [depositAmount, setDepositAmount] = useState("");
   const [withdrawalAmount, setWithdrawalAmount] = useState("");
@@ -7,13 +9,54 @@ function AccountOperations() {
   const [loanPurpose, setLoanPurpose] = useState("");
   const [currency, setCurrency] = useState("USD");
 
-  function handleDeposit() {}
+  const dispatch = useDispatch();
+  const account = useSelector((store) => store.account);
+  const { balance, loan, isLoading } = account;
 
-  function handleWithdrawal() {}
+  function handleDeposit() {
+    if (!depositAmount) return;
+    const depositedAmount = Number(depositAmount);
+    if (depositedAmount < 0) {
+      throw new Error(`Negative amount is not allowed`);
+    }
+    // dispatch(deposit(depositedAmount, currency));
+    dispatch(deposit(depositedAmount));
+    setDepositAmount("");
+    // setCurrency("");
+  }
 
-  function handleRequestLoan() {}
+  function handleWithdrawal() {
+    const withdrawnAmount = Number(withdrawalAmount);
+    if (withdrawnAmount > balance) {
+      throw new Error(
+        `Maximum amount to be withdrawn is: ${balance} ${currency}`
+      );
+    }
+    dispatch(withdraw(withdrawnAmount));
+    setWithdrawalAmount("");
+  }
 
-  function handlePayLoan() {}
+  function handleRequestLoan() {
+    const loanedAmount = Number(loanAmount);
+    if (loanedAmount < 0) {
+      throw new Error(`Negative amount is not allowed`);
+    }
+    if (!loanAmount && !loanPurpose) return;
+    dispatch(requestLoan(loanedAmount, loanPurpose));
+    setLoanAmount("");
+    setLoanPurpose("");
+  }
+
+  function handlePayLoan() {
+    if (loanAmount > balance) {
+      const minimumAmountToPayLoan = formatCurrency(loan - balance);
+      throw new Error(
+        `Insufficient balance to pay the loan. You need at least ${minimumAmountToPayLoan} more`
+      );
+    }
+
+    dispatch(payLoan());
+  }
 
   return (
     <div>
@@ -35,7 +78,11 @@ function AccountOperations() {
             <option value="GBP">British Pound</option>
           </select>
 
-          <button onClick={handleDeposit}>Deposit {depositAmount}</button>
+          {isLoading ? (
+            "Converting Currency to USD..."
+          ) : (
+            <button onClick={handleDeposit}>Deposit</button>
+          )}
         </div>
 
         <div>
@@ -45,31 +92,33 @@ function AccountOperations() {
             value={withdrawalAmount}
             onChange={(e) => setWithdrawalAmount(+e.target.value)}
           />
-          <button onClick={handleWithdrawal}>
-            Withdraw {withdrawalAmount}
-          </button>
+          <button onClick={handleWithdrawal}>Withdraw</button>
         </div>
 
-        <div>
-          <label>Request loan</label>
-          <input
-            type="number"
-            value={loanAmount}
-            onChange={(e) => setLoanAmount(+e.target.value)}
-            placeholder="Loan amount"
-          />
-          <input
-            value={loanPurpose}
-            onChange={(e) => setLoanPurpose(e.target.value)}
-            placeholder="Loan purpose"
-          />
-          <button onClick={handleRequestLoan}>Request loan</button>
-        </div>
+        {!loan && (
+          <div>
+            <label>Request loan</label>
+            <input
+              type="number"
+              value={loanAmount}
+              onChange={(e) => setLoanAmount(+e.target.value)}
+              placeholder="Loan amount"
+            />
+            <input
+              value={loanPurpose}
+              onChange={(e) => setLoanPurpose(e.target.value)}
+              placeholder="Loan purpose"
+            />
+            <button onClick={handleRequestLoan}>Request loan</button>
+          </div>
+        )}
 
-        <div>
-          <span>Pay back $X</span>
-          <button onClick={handlePayLoan}>Pay loan</button>
-        </div>
+        {loan ? (
+          <div>
+            <span>Pay back {formatCurrency(loan, currency)} </span>
+            <button onClick={handlePayLoan}>Pay loan</button>
+          </div>
+        ) : null}
       </div>
     </div>
   );
